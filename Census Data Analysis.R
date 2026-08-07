@@ -93,7 +93,7 @@ age_sex_hastings_total$Age..6.categories. <- factor(
   levels = age_hastings_total$Age..6.categories.[order(age_hastings_total$proportion)]
 )
 
-ggplot(age_sex_hastings_total, aes(x = total, y = Age..6.categories.,fill = Sex..2.categories.)) +
+ggplot(age_sex_hastings_total, aes(x = total, y = Age..6.categories.,colour = Sex..2.categories.)) +
   geom_segment(aes(x = 0, xend = total,
                    y = Age..6.categories., yend = Age..6.categories.),
                colour = "grey70",
@@ -116,3 +116,10 @@ ggplot(age_sex_hastings_total, aes(x = total, y = Age..6.categories.,fill = Sex.
     panel.grid.major.y = element_blank(),
     panel.grid.minor = element_blank()
   )
+
+ggplot(age_sex_hastings_total)+
+  geom_linerange(aes(x = Age..6.categories., ymin = 0, ymax = total, colour = Sex..2.categories.), 
+                 position = position_dodge(width = 1))+
+  geom_point(aes(x = Age..6.categories., y = total, colour = Sex..2.categories.),
+             position = position_dodge(width = 1))+
+  coord_flip()
