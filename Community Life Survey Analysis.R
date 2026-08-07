@@ -42,5 +42,7 @@ Plymouth_CLS<-data |> filter(lad25nm==186) ## 657 observations for Plymouth (wil
 ##  SPullL
 ##  LocAtt
 ##  FUnPd1A (-N)
-##  
+##  CivAct21 (-28)
+##  Assets2A_a (-Assets3_M)
+##  LocInvNa (-LocInvNg)
 
