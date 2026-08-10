@@ -217,3 +217,60 @@ ggplot(ethnicity_sex_hastings_total)+
   geom_point(aes(x = Ethnic.group..20.categories., y = total, colour = Sex..2.categories.),
              position = position_dodge(width = 1))+
   coord_flip()
+
+
+## Education
+
+education_hastings_total<-education_hastings |> group_by(Highest.level.of.qualification..7.categories.) |> 
+  summarise(total=sum(Observation)) |> 
+  mutate(proportion=(total/6874)*100)
+
+
+education_sex_hastings_total<-education_sex_hastings |> group_by(Sex..2.categories.,Highest.level.of.qualification..7.categories.) |> 
+  summarise(total=sum(Observation))
+
+ggplot(education_hastings_total,aes(x=Highest.level.of.qualification..7.categories.,y=total))+geom_bar(stat = "identity")
+
+ggplot(education_sex_hastings_total,aes(x=Highest.level.of.qualification..7.categories.,y=total,fill=Sex..2.categories.))+
+  geom_bar(stat = "identity",position = position_dodge(width = 0.9))
+
+# Order by percentage
+education_hastings_total$education_f <- factor(
+  education_hastings_total$Highest.level.of.qualification..7.categories.,
+  levels = education_hastings_total$Highest.level.of.qualification..7.categories.[order(education_hastings_total$proportion)]
+)
+
+ggplot(education_hastings_total, aes(x = proportion, y = education_f)) +
+  geom_segment(aes(x = 0, xend = proportion,
+                   y = education_f, yend = education_f),
+               colour = "grey70",
+               linewidth = 1) +
+  geom_point(size = 5, colour = "#0072B2") +
+  geom_text(aes(label = sprintf("%.1f%%", proportion)),
+            hjust = -0.3, size = 4) +
+  scale_x_continuous(
+    limits = c(0, 100),
+    expand = expansion(mult = c(0, 0.1))
+  ) +
+  labs(
+    title = "Age Group Profile",
+    subtitle = "Percentage of population by age group",
+    x = "Percentage (%)",
+    y = NULL
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+
+
+ggplot(education_sex_hastings_total)+
+  geom_linerange(aes(x = Highest.level.of.qualification..7.categories., ymin = 0, ymax = total, colour = Sex..2.categories.), 
+                 position = position_dodge(width = 1))+
+  geom_point(aes(x = Highest.level.of.qualification..7.categories., y = total, colour = Sex..2.categories.),
+             position = position_dodge(width = 1))+
+  coord_flip()
+ 
+## Note: shorten the names of the education labels to improve the plot for the report
+
