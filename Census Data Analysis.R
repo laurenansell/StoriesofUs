@@ -64,8 +64,8 @@ ggplot(age_hastings_total,aes(x=Age..6.categories.,y=total))+geom_bar(stat = "id
 ggplot(age_sex_hastings_total,aes(x=Age..6.categories.,y=total,fill=Sex..2.categories.))+
   geom_bar(stat = "identity",position = position_dodge(width = 0.9))
 
-# Order by percentage
-age_hastings_total$Age..6.categories. <- factor(
+## Order by percentage
+age_hastings_total$Age..6.categories_f <- factor(
   age_hastings_total$Age..6.categories.,
   levels = age_hastings_total$Age..6.categories.[order(age_hastings_total$proportion)]
 )
@@ -95,7 +95,7 @@ ggplot(age_hastings_total, aes(x = proportion, y = Age..6.categories.)) +
   )
 
 
-# Order by percentage
+## Order by percentage
 age_sex_hastings_total$Age..6.categories. <- factor(
   age_sex_hastings_total$Age..6.categories.,
   levels = age_hastings_total$Age..6.categories.[order(age_hastings_total$proportion)]
@@ -124,6 +124,39 @@ ggplot(age_sex_hastings_total, aes(x = total, y = Age..6.categories.,colour = Se
     panel.grid.major.y = element_blank(),
     panel.grid.minor = element_blank()
   )
+
+
+age_sex_hastings_total$Age..6.categories_f <- factor(
+  age_sex_hastings_total$Age..6.categories.,
+  levels = age_hastings_total$Age..6.categories.[order(age_hastings_total$Age..6.categories.)]
+)
+
+# Order by age
+
+ggplot(age_hastings_total, aes(x = proportion, y = Age..6.categories.)) +
+  geom_segment(aes(x = 0, xend = proportion,
+                   y = Age..6.categories., yend = Age..6.categories.),
+               colour = "grey70",
+               linewidth = 1) +
+  geom_point(size = 5, colour = "#0072B2") +
+  geom_text(aes(label = sprintf("%.1f%%", proportion)),
+            hjust = -0.3, size = 4) +
+  scale_x_continuous(
+    limits = c(0, 25),
+    expand = expansion(mult = c(0, 0.1))
+  ) +
+  labs(
+    title = "Age Group Profile",
+    subtitle = "Percentage of population by age group",
+    x = "Percentage (%)",
+    y = NULL
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+
 
 ggplot(age_sex_hastings_total)+
   geom_linerange(aes(x = Age..6.categories., ymin = 0, ymax = total, colour = Sex..2.categories.), 
@@ -135,34 +168,34 @@ ggplot(age_sex_hastings_total)+
 
 ## Ethnicity
 
-ethnicity_hastings_total<-ethnicity_hastings |> group_by(Age..6.categories.) |> summarise(total=sum(Observation)) |> 
-  mutate(proportion=(total/6876)*100)
+ethnicity_hastings_total<-ethnicity_hastings |> group_by(Ethnic.group..20.categories.) |> summarise(total=sum(Observation)) |> 
+  mutate(proportion=(total/6869)*100)
 
 
-age_sex_hastings_total<-age_sex_hastings |> group_by(Sex..2.categories.,Age..6.categories.) |> 
+ethnicity_sex_hastings_total<-ethnicity_sex_hastings |> group_by(Sex..2.categories.,Ethnic.group..20.categories.) |> 
   summarise(total=sum(Observation))
 
-ggplot(age_hastings_total,aes(x=Age..6.categories.,y=total))+geom_bar(stat = "identity")
+ggplot(ethnicity_hastings_total,aes(x=Ethnic.group..20.categories.,y=total))+geom_bar(stat = "identity")
 
-ggplot(age_sex_hastings_total,aes(x=Age..6.categories.,y=total,fill=Sex..2.categories.))+
+ggplot(ethnicity_sex_hastings_total,aes(x=Ethnic.group..20.categories.,y=total,fill=Sex..2.categories.))+
   geom_bar(stat = "identity",position = position_dodge(width = 0.9))
 
 # Order by percentage
-age_hastings_total$Age..6.categories. <- factor(
-  age_hastings_total$Age..6.categories.,
-  levels = age_hastings_total$Age..6.categories.[order(age_hastings_total$proportion)]
+ethnicity_hastings_total$ethnicity_f <- factor(
+  ethnicity_hastings_total$Ethnic.group..20.categories.,
+  levels = ethnicity_hastings_total$Ethnic.group..20.categories.[order(ethnicity_hastings_total$proportion)]
 )
 
-ggplot(age_hastings_total, aes(x = proportion, y = Age..6.categories.)) +
+ggplot(ethnicity_hastings_total, aes(x = proportion, y = ethnicity_f)) +
   geom_segment(aes(x = 0, xend = proportion,
-                   y = Age..6.categories., yend = Age..6.categories.),
+                   y = ethnicity_f, yend = ethnicity_f),
                colour = "grey70",
                linewidth = 1) +
   geom_point(size = 5, colour = "#0072B2") +
   geom_text(aes(label = sprintf("%.1f%%", proportion)),
             hjust = -0.3, size = 4) +
   scale_x_continuous(
-    limits = c(0, 25),
+    limits = c(0, 100),
     expand = expansion(mult = c(0, 0.1))
   ) +
   labs(
@@ -178,39 +211,9 @@ ggplot(age_hastings_total, aes(x = proportion, y = Age..6.categories.)) +
   )
 
 
-# Order by percentage
-age_sex_hastings_total$Age..6.categories. <- factor(
-  age_sex_hastings_total$Age..6.categories.,
-  levels = age_hastings_total$Age..6.categories.[order(age_hastings_total$proportion)]
-)
-
-ggplot(age_sex_hastings_total, aes(x = total, y = Age..6.categories.,colour = Sex..2.categories.)) +
-  geom_segment(aes(x = 0, xend = total,
-                   y = Age..6.categories., yend = Age..6.categories.),
-               colour = "grey70",
-               linewidth = 1) +
-  geom_point(size = 5, colour = "#0072B2") +
-  geom_text(aes(label = total),
-            hjust = -0.3, size = 4) +
-  scale_x_continuous(
-    limits = c(0, 1000),
-    expand = expansion(mult = c(0, 0.1))
-  ) +
-  labs(
-    title = "Age Group Profile",
-    subtitle = "Percentage of population by age group",
-    x = "Percentage (%)",
-    y = NULL
-  ) +
-  theme_minimal(base_size = 12) +
-  theme(
-    panel.grid.major.y = element_blank(),
-    panel.grid.minor = element_blank()
-  )
-
-ggplot(age_sex_hastings_total)+
-  geom_linerange(aes(x = Age..6.categories., ymin = 0, ymax = total, colour = Sex..2.categories.), 
+ggplot(ethnicity_sex_hastings_total)+
+  geom_linerange(aes(x = Ethnic.group..20.categories., ymin = 0, ymax = total, colour = Sex..2.categories.), 
                  position = position_dodge(width = 1))+
-  geom_point(aes(x = Age..6.categories., y = total, colour = Sex..2.categories.),
+  geom_point(aes(x = Ethnic.group..20.categories., y = total, colour = Sex..2.categories.),
              position = position_dodge(width = 1))+
   coord_flip()
