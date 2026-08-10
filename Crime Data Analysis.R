@@ -10,12 +10,13 @@
 ## Creation date: 05/08/2026
 
 ## Modified on: 07/07/2026
-
+##              10/08/2026
 
 ## Load in the required libraries
 library(tidyverse)
-
-
+library(sf)
+library(mapview)
+library(leaflet)
 
 ## Read in the data
 
@@ -91,6 +92,66 @@ rm(myfiles)
 plymouth_lsoas<-c("Plymouth 034A", "Plymouth 034B", "Plymouth 034C", "Plymouth 034D", "Plymouth 034E")
 
 hastings_lsoas<-c("Hastings 009A", "Hastings 009B", "Hastings 009C", "Hastings 009D")
+
+
+## Hastings
+
+crime_data_street_hastings<-crime_data_street_all |> filter(LSOA.name %in% hastings_lsoas)
+
+crime_data_outcomes_hastings<-crime_data_outcomes_all |> filter(LSOA.name %in% hastings_lsoas)
+
+## Use the latitude and longitudes from the subsets above to filter the stop and search data
+
+max(crime_data_street_hastings$Longitude) ## 0.590257
+min(crime_data_street_hastings$Longitude) ## 0.570389
+
+max(crime_data_street_hastings$Latitude) ## 50.86436
+min(crime_data_street_hastings$Latitude) ## 50.85371
+
+## Check for any differences with the outcome data
+
+max(crime_data_outcomes_hastings$Longitude) ## 0.590257
+min(crime_data_outcomes_hastings$Longitude) ## 0.570389
+
+max(crime_data_outcomes_hastings$Latitude) ## 50.86436
+min(crime_data_outcomes_hastings$Latitude) ## 50.85371
+
+## Both the same
+
+crime_data_stopandsearch_hastings<-crime_data_stopandsearch_all |> filter(Latitude>50.85371 & Latitude<50.86436) |> 
+  filter(Longitude>0.570389 & Longitude<0.590257)
+
+## Convert some of the data types
+
+str(crime_data_street_hastings)
+
+crime_data_street_hastings$Month<-as.Date(paste(crime_data_street_hastings$Month, "-01", sep=""))
+
+
+## Street level analysis
+
+crime_data_street_hastings |> group_by(Crime.type) |> count() |> 
+  ggplot(aes(x=Crime.type,y=n))+geom_bar(stat = "identity")+
+  coord_flip()
+
+
+mapview(crime_data_street_hastings, xcol = "Longitude", ycol = "Latitude", colour="Crime.type", 
+        crs = 4269, grid = FALSE)
+
+
+leaflet() |> setView(lng = 0.580323, lat = 50.85903, zoom = 15) |> 
+  addTiles()
+
+
+
+leaflet(data = crime_data_street_hastings) |> addTiles() |>
+  addMarkers(~Longitude, ~Latitude, popup = ~as.character(Crime.type))
+
+leaflet(data =crime_data_stopandsearch_hastings) |> addTiles() |>
+  addMarkers(~Longitude, ~Latitude, popup = ~as.character(Object.of.search))
+
+
+## Plymouth
 
 crime_data_street_plymouth<-crime_data_street_all |> filter(LSOA.name %in% plymouth_lsoas)
 
