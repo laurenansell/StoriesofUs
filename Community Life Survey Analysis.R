@@ -47,7 +47,7 @@ rm(data)
 ##  LocAtt
 ##  FUnPd1A (-N)
 ##  CivAct21 (-28)
-##  Assets2A_a (-Assets3_M)
+##  Assets2A_a (-Assets2L_d)
 ##  LocInvNa (-LocInvNg)
 
 Hastings_CLS_reduced<-Hastings_CLS |> select(SBeNeigh,SPull,SPullL,LocAtt,FUnPd1A,FUnPd1B,FUnPd1C,FUnPd1D,FUnPd1E,FUnPd1F,
@@ -55,6 +55,13 @@ Hastings_CLS_reduced<-Hastings_CLS |> select(SBeNeigh,SPull,SPullL,LocAtt,FUnPd1
                                              CivAct21,CivAct22,CivAct23,CivAct24,CivAct25,CivAct26,CivAct27,CivAct28,
                                              Assets2A_a,Assets2A_b,Assets2A_c,Assets2A_d,Assets2B_a,Assets2B_b,
                                              Assets2B_c,Assets2B_d,Assets2C_a,Assets2C_b,Assets2C_c,Assets2C_d,
-                                             Assets3_A,Assets3_B,Assets3_C,Assets3_D,Assets3_E,Assets3_F,Assets3_G,
-                                             Assets3_H,Assets3_I,Assets3_J,Assets3_K,Assets3_L,Assets3_M,
+                                             Assets2D_a,Assets2D_b,Assets2D_c,Assets2D_d,Assets2E_a,Assets2E_b,
+                                             Assets2E_c,Assets2E_d,Assets2F_a,Assets2F_b,Assets2F_c,Assets2F_d,
+                                             Assets2G_a,Assets2G_b,Assets2G_c,Assets2G_d,Assets2H_a,Assets2H_b,
+                                             Assets2H_c,Assets2H_d,Assets2I_a,Assets2I_b,Assets2I_c,Assets2I_d,
+                                             Assets2J_a,Assets2J_b,Assets2J_c,Assets2J_d,Assets2K_a,Assets2K_b,
+                                             Assets2K_c,Assets2K_d,Assets2K_e,Assets2L_a,Assets2L_b,Assets2L_c,
+                                             Assets2L_d,
                                              LocInvNa,LocInvNb,LocInvNc,LocInvNd,LocInvNe,LocInvNf,LocInvNg)
+
+table(Hastings_CLS_reduced$SPull)
