@@ -404,3 +404,12 @@ age_sex_df<-cbind(age_sex,sex) |> as.data.frame()
 age_sex_df$age_sex<-as.numeric(age_sex_df$age_sex)
 
 ggplot(age_sex_df,aes(x=sex,y=age_sex))+geom_violin()
+
+
+
+p <- ggplot(age_sex_df, aes(factor(sex), age_sex)) +
+  geom_violin()+xlab("Sex")+ylab("Age (years)")
+
+plot_gg(p)
+
+writeOBJ("AgeViolin.obj")
