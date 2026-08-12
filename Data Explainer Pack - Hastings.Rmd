@@ -14,6 +14,9 @@ crime_data_street_hastings<-read.csv("../Data for Explainer Pack/hastings_street
 crime_data_stopandsearch_hastings<-read.csv("../Data for Explainer Pack/hastings_stopandsearch.csv")
 crime_data_outcomes_hastings<-read.csv("../Data for Explainer Pack/hastings_outcomes.csv")
 
+crime_data_street_hastings$Month<-as.Date(paste(crime_data_street_hastings$Month, "-01", sep=""))
+crime_data_stopandsearch_hastings$Date<-as.POSIXct(crime_data_stopandsearch_hastings$Date)
+
 ```
 
 
@@ -42,5 +45,45 @@ Castle ward summary here
 ![Hastings street heat map]("./Images/Hastings_Street_Heatmap.png")
 
 ![Hastings street map]("./Images/Hastings_Street_map.png")
+
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+
+crime_data_street_hastings |> group_by(Crime.type) |> count() |> 
+  ggplot(aes(x=Crime.type,y=n))+geom_bar(stat = "identity")+
+  coord_flip()
+
+```
+
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+
+crime_data_street_hastings |> group_by(Month) |> count() |> 
+  ggplot(aes(x=Month,y=n))+geom_line()
+
+```
+
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+
+crime_data_stopandsearch_hastings |> group_by(Object.of.search) |> count() |> 
+  ggplot(aes(x=Object.of.search,y=n))+geom_bar(stat = "identity")+
+  coord_flip()
+
+```
+
+
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+
+crime_data_stopandsearch_hastings |> group_by(Self.defined.ethnicity) |> count() |> 
+  ggplot(aes(x=Self.defined.ethnicity,y=n))+geom_bar(stat = "identity")+
+  coord_flip()
+
+```
+
+
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+
+crime_data_stopandsearch_hastings |> group_by(Date) |> count() |> 
+  ggplot(aes(x=Date,y=n))+geom_line()
+
+```
 
 ## IMD Data
