@@ -11,6 +11,7 @@
 
 ## Modified on: 07/07/2026
 ##              10/08/2026
+##              12/08/2026
 
 ## Load in the required libraries
 library(tidyverse)
@@ -120,6 +121,14 @@ min(crime_data_outcomes_hastings$Latitude) ## 50.85371
 
 crime_data_stopandsearch_hastings<-crime_data_stopandsearch_all |> filter(Latitude>50.85371 & Latitude<50.86436) |> 
   filter(Longitude>0.570389 & Longitude<0.590257)
+
+
+## Save data for the explainer packs
+
+write.csv(crime_data_street_hastings,"../Data for Explainer Pack/hastings_street.csv",row.names = FALSE)
+write.csv(crime_data_stopandsearch_hastings,"../Data for Explainer Pack/hastings_stopandsearch.csv",row.names = FALSE)
+write.csv(crime_data_outcomes_hastings,"../Data for Explainer Pack/hastings_outcomes.csv",row.names = FALSE)
+
 
 ## Convert some of the data types
 
