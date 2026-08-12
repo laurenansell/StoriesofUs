@@ -10,6 +10,7 @@
 ## Creation date: 05/08/2026
 
 ## Modified on: 11/08/2026
+##              12/08/2026
 
 
 ## Load in the required libraries
@@ -63,5 +64,10 @@ Hastings_CLS_reduced<-Hastings_CLS |> select(SBeNeigh,SPull,SPullL,LocAtt,FUnPd1
                                              Assets2K_c,Assets2K_d,Assets2K_e,Assets2L_a,Assets2L_b,Assets2L_c,
                                              Assets2L_d,
                                              LocInvNa,LocInvNb,LocInvNc,LocInvNd,LocInvNe,LocInvNf,LocInvNg)
+
+## Save data for the explainer packs
+
+
+write.csv(Hastings_CLS_reduced,"../Data for Explainer Pack/hastings_cls.csv",row.names = FALSE)
 
 table(Hastings_CLS_reduced$SPull)
