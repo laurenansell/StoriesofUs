@@ -18,6 +18,7 @@ library(tidyverse)
 library(sf)
 library(mapview)
 library(leaflet)
+library(leaflet.extras)
 
 ## Read in the data
 
@@ -152,12 +153,39 @@ leaflet() |> setView(lng = 0.580323, lat = 50.85903, zoom = 15) |>
   addTiles()
 
 
+factpal <- colorFactor(topo.colors(15), crime_data_street_hastings$Crime.type)
+factpal1 <- colorFactor(topo.colors(10), crime_data_stopandsearch_hastings$Object.of.search)
 
 leaflet(data = crime_data_street_hastings) |> addTiles() |>
-  addMarkers(~Longitude, ~Latitude, popup = ~as.character(Crime.type))
+  addCircleMarkers(~Longitude, ~Latitude, popup = ~as.character(Crime.type),
+                   color = ~factpal(Crime.type)) |> 
+  addLegend(pal = factpal, values = ~Crime.type, opacity = 1,position = "topleft")
 
 leaflet(data =crime_data_stopandsearch_hastings) |> addTiles() |>
-  addMarkers(~Longitude, ~Latitude, popup = ~as.character(Object.of.search))
+  addCircleMarkers(~Longitude, ~Latitude, popup = ~as.character(Object.of.search),
+             color=~factpal1(Object.of.search)) |> 
+  addLegend(pal = factpal1, values = ~Object.of.search, opacity = 1,position = "topleft")
+
+leaflet(crime_data_stopandsearch_hastings) %>%
+  addTiles() %>%  # Add default OpenStreetMap background
+  addHeatmap(
+    lng = ~Longitude, 
+    lat = ~Latitude, 
+    blur = 20, 
+    max = 0.05, 
+    radius = 15
+  )
+
+
+leaflet(crime_data_street_hastings) %>%
+  addTiles() %>%  # Add default OpenStreetMap background
+  addHeatmap(
+    lng = ~Longitude, 
+    lat = ~Latitude, 
+    blur = 20, 
+    max = 0.05, 
+    radius = 15
+  )
 
 
 ## Plymouth
