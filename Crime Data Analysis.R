@@ -137,6 +137,7 @@ str(crime_data_street_hastings)
 
 crime_data_street_hastings$Month<-as.Date(paste(crime_data_street_hastings$Month, "-01", sep=""))
 
+crime_data_stopandsearch_hastings$Date<-as.POSIXct(crime_data_stopandsearch_hastings$Date)
 
 ## Street level analysis
 
