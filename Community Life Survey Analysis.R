@@ -16,6 +16,8 @@
 ## Load in the required libraries
 library(tidyverse)
 library(haven)
+library(likert)
+
 
 ## Read in the data
 data<-read_sav("community_life_survey_2024_25_annual_data_safeguard.sav")
@@ -63,11 +65,25 @@ Hastings_CLS_reduced<-Hastings_CLS |> select(SBeNeigh,SPull,SPullL,LocAtt,FUnPd1
                                              Assets2J_a,Assets2J_b,Assets2J_c,Assets2J_d,Assets2K_a,Assets2K_b,
                                              Assets2K_c,Assets2K_d,Assets2K_e,Assets2L_a,Assets2L_b,Assets2L_c,
                                              Assets2L_d,
-                                             LocInvNa,LocInvNb,LocInvNc,LocInvNd,LocInvNe,LocInvNf,LocInvNg)
+                                             LocInvNa,LocInvNb,LocInvNc,LocInvNd,LocInvNe,LocInvNf,LocInvNg,lad25cd)
 
 ## Save data for the explainer packs
 
 
 write.csv(Hastings_CLS_reduced,"../Data for Explainer Pack/hastings_cls.csv",row.names = FALSE)
 
-table(Hastings_CLS_reduced$SPull)
+table(Hastings_CLS_reduced$SBeNeigh)
+
+SBeNeigh_f<-Hastings_CLS_reduced$SBeNeigh |> as.factor() |> as.data.frame()
+
+
+names(SBeNeigh_f) <- "How strongly do you feel you belong to your immediate neighbourhood"
+
+
+lik <- likert(items=SBeNeigh_f[,1,drop=FALSE])
+
+plot(lik)
+
+
+Hastings_CLS_reduced |> group_by(SPull) |> count() |> 
+  ggplot(aes(x=SPull,y=n))+geom_bar(stat="identity")

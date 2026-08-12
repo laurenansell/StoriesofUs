@@ -11,6 +11,7 @@ library(mapview)
 library(sf)
 library(tmap)
 library(scales)
+library(likert)
 
 ## Census Data
 
@@ -22,6 +23,10 @@ education_hastings<-read.csv("../Data for Explainer Pack/hastings_education.csv"
 education_sex_hastings<-read.csv("../Data for Explainer Pack/hastings_education_sex.csv")
 ethnicity_hastings<-read.csv("../Data for Explainer Pack/hastings_ethnicity.csv")
 ethnicity_sex_hastings<-read.csv("../Data for Explainer Pack/hastings_ethnicity_sex.csv")
+
+## CLS
+
+Hastings_CLS_reduced<-read.csv("../Data for Explainer Pack/hastings_cls.csv")
 
 ## Crime Data
 crime_data_street_hastings<-read.csv("../Data for Explainer Pack/hastings_street.csv")
@@ -133,6 +138,41 @@ ggplot(disability_sex_hastings_total)+
 \newpage
 
 ## Community Life Survey
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+
+Hastings_CLS_reduced |> group_by(LocAtt) |> count() |> 
+  ggplot(aes(x=LocAtt,y=n))+geom_bar(stat="identity",fill="lightgreen",colour = "darkgreen")+
+  ylab("Frequency")+xlab("Response")+labs(title = "When people get involved in their local area they can change the way the area is",
+       subtitle = "1 - Definitely agree, 5 - Definitely disagree")
+
+
+```
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+
+SBeNeigh_f<-Hastings_CLS_reduced$SBeNeigh |> as.factor() |> as.data.frame()
+
+
+names(SBeNeigh_f) <- "How strongly do you feel you belong to your immediate neighbourhood"
+
+
+lik <- likert(items=SBeNeigh_f[,1,drop=FALSE])
+
+plot(lik)
+
+
+```
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+
+Hastings_CLS_reduced |> group_by(SPull) |> count() |> 
+  ggplot(aes(x=SPull,y=n))+geom_bar(stat="identity",fill = "lightblue",color="blue")+
+  ylab("Frequency")+xlab("Response")+labs(title = "People in this neighbourhood pull together to improve the neighbourhood",
+       subtitle = "1 - Definitely agree, 4 - Definitely disagree")
+  
+
+```
 
 
 \newpage
