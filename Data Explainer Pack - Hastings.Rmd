@@ -9,13 +9,34 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(sf)
 library(mapview)
+library(sf)
+library(tmap)
 
+## Census Data
+
+age_hastings<-read.csv("../Data for Explainer Pack/hastings_age.csv")
+age_sex_hastings<-read.csv("../Data for Explainer Pack/hastings_age_sex.csv")
+disability_hastings<-read.csv("../Data for Explainer Pack/hastings_disability.csv")
+disability_sex_hastings<-read.csv("../Data for Explainer Pack/hastings_disability_sex.csv")
+education_hastings<-read.csv("../Data for Explainer Pack/hastings_education.csv")
+education_sex_hastings<-read.csv("../Data for Explainer Pack/hastings_education_sex.csv")
+ethnicity_hastings<-read.csv("../Data for Explainer Pack/hastings_ethnicity.csv")
+ethnicity_sex_hastings<-read.csv("../Data for Explainer Pack/hastings_ethnicity_sex.csv")
+
+## Crime Data
 crime_data_street_hastings<-read.csv("../Data for Explainer Pack/hastings_street.csv")
 crime_data_stopandsearch_hastings<-read.csv("../Data for Explainer Pack/hastings_stopandsearch.csv")
 crime_data_outcomes_hastings<-read.csv("../Data for Explainer Pack/hastings_outcomes.csv")
 
 crime_data_street_hastings$Month<-as.Date(paste(crime_data_street_hastings$Month, "-01", sep=""))
 crime_data_stopandsearch_hastings$Date<-as.POSIXct(crime_data_stopandsearch_hastings$Date)
+
+## IMD Data
+
+hastings_shape<-read_sf( "../Shapefiles/Hastings_LSOAs.shp")
+IMD_hastings<-read.csv("../Data for Explainer Pack/hastings_IMD.csv")
+
+hastings_shape<-cbind(hastings_shape,IMD_hastings)
 
 ```
 
@@ -30,6 +51,66 @@ Castle ward summary here
 
 
 ## 2021 Census Data
+
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+
+age_sex_hastings_total<-age_sex_hastings |> group_by(Sex..2.categories.,Age..6.categories.) |> 
+  summarise(total=sum(Observation))
+
+ggplot(age_sex_hastings_total)+
+  geom_linerange(aes(x = Age..6.categories., ymin = 0, ymax = total, colour = Sex..2.categories.), 
+                 position = position_dodge(width = 1))+
+  geom_point(aes(x = Age..6.categories., y = total, colour = Sex..2.categories.),
+             position = position_dodge(width = 1))+
+  coord_flip()
+
+```
+
+
+```{r,message=FALSE,echo=FALSE,warning=FALSE}
+
+ethnicity_sex_hastings_total<-ethnicity_sex_hastings |> group_by(Sex..2.categories.,Ethnic.group..20.categories.) |> 
+  summarise(total=sum(Observation))
+
+ggplot(ethnicity_sex_hastings_total)+
+  geom_linerange(aes(x = Ethnic.group..20.categories., ymin = 0, ymax = total, colour = Sex..2.categories.), 
+                 position = position_dodge(width = 1))+
+  geom_point(aes(x = Ethnic.group..20.categories., y = total, colour = Sex..2.categories.),
+             position = position_dodge(width = 1))+
+  coord_flip()
+
+```
+
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+
+education_sex_hastings_total<-education_sex_hastings |> group_by(Sex..2.categories.,Highest.level.of.qualification..7.categories.) |> 
+  summarise(total=sum(Observation))
+
+ggplot(education_sex_hastings_total)+
+  geom_linerange(aes(x = Highest.level.of.qualification..7.categories., ymin = 0, ymax = total, colour = Sex..2.categories.), 
+                 position = position_dodge(width = 1))+
+  geom_point(aes(x = Highest.level.of.qualification..7.categories., y = total, colour = Sex..2.categories.),
+             position = position_dodge(width = 1))+
+  coord_flip()
+
+```
+
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+
+disability_sex_hastings_total<-disability_sex_hastings |> group_by(Sex..2.categories.,Disability..3.categories.) |> 
+  summarise(total=sum(Observation))
+
+ggplot(disability_sex_hastings_total)+
+  geom_linerange(aes(x = Disability..3.categories., ymin = 0, ymax = total, colour = Sex..2.categories.), 
+                 position = position_dodge(width = 1))+
+  geom_point(aes(x = Disability..3.categories., y = total, colour = Sex..2.categories.),
+             position = position_dodge(width = 1))+
+  coord_flip()
+
+```
 
 
 ## Community Life Survey
@@ -87,3 +168,11 @@ crime_data_stopandsearch_hastings |> group_by(Date) |> count() |>
 ```
 
 ## IMD Data
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+
+
+qtm(hastings_shape,fill ="Health.Deprivation.and.Disability.Rank..where.1.is.most.deprived.",
+    fill.title="Index of Multiple Deprivation (Rank)")
+
+```
