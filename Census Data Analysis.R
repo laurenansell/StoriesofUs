@@ -10,6 +10,7 @@
 ## Creation date: 07/08/2026
 
 ## Modified on: 10/07/2026
+##              12/08/2026
 
 
 ## Load in the required libraries
@@ -48,6 +49,20 @@ ethnicity_hastings<-ethnicity_data |> filter(Lower.layer.Super.Output.Areas %in%
 ethnicity_sex_hastings<-ethnicity_sex_data |> filter(Lower.layer.Super.Output.Areas %in% hastings_lsoas)
 
 
+## Save data for the explainer packs
+
+
+write.csv(age_hastings,"../Data for Explainer Pack/hastings_age.csv",row.names = FALSE)
+write.csv(age_sex_hastings,"../Data for Explainer Pack/hastings_age_sex.csv",row.names = FALSE)
+
+write.csv(disability_hastings,"../Data for Explainer Pack/hastings_disability.csv",row.names = FALSE)
+write.csv(disability_sex_hastings,"../Data for Explainer Pack/hastings_disability_sex.csv",row.names = FALSE)
+
+write.csv(education_hastings,"../Data for Explainer Pack/hastings_education.csv",row.names = FALSE)
+write.csv(education_sex_hastings,"../Data for Explainer Pack/hastings_education_sex.csv",row.names = FALSE)
+
+write.csv(ethnicity_hastings,"../Data for Explainer Pack/hastings_ethnicity.csv",row.names = FALSE)
+write.csv(ethnicity_sex_hastings,"../Data for Explainer Pack/hastings_ethnicity_sex.csv",row.names = FALSE)
 
 ## Age
 
