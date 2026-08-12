@@ -6,23 +6,41 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(sf)
+library(mapview)
+
+crime_data_street_hastings<-read.csv("../Data for Explainer Pack/hastings_street.csv")
+crime_data_stopandsearch_hastings<-read.csv("../Data for Explainer Pack/hastings_stopandsearch.csv")
+crime_data_outcomes_hastings<-read.csv("../Data for Explainer Pack/hastings_outcomes.csv")
+
 ```
 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+This is the data explainer pack.....
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
-```
 
 ## Area Summary
 
-You can also embed plots, for example:
+Castle ward summary here
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## 2021 Census Data
+
+
+## Community Life Survey
+
+
+
+## Crime Data
+
+![Hastings stop and search heat map]("./Images/Hastings_StopandSearch_Heatmap.png")
+
+![Hastings stop and search map]("./Images/Hastings_StopandSearch_map.png")
+
+![Hastings street heat map]("./Images/Hastings_Street_Heatmap.png")
+
+![Hastings street map]("./Images/Hastings_Street_map.png")
+
+## IMD Data
