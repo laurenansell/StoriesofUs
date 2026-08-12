@@ -78,5 +78,32 @@ leaflet(hastings_shape) |>
   addLegend(
     pal = pal,
     values = ~Health.Deprivation.and.Disability.Rank..where.1.is.most.deprived.,
-    title = "IMD Score"
+    title = "IMD Health Derivation and Disability (Rank)",
+    position = "topleft"
+  )
+
+
+
+pal1 <- colorNumeric(
+  palette = "viridis",
+  domain = hastings_shape$Health.Deprivation.and.Disability.Decile..where.1.is.most.deprived.10..of.LSOAs.
+)
+
+leaflet(hastings_shape) |>
+  addTiles() |>
+  addPolygons(
+    fillColor = ~pal1(Health.Deprivation.and.Disability.Decile..where.1.is.most.deprived.10..of.LSOAs.),
+    fillOpacity = 0.7,
+    color = "white",
+    weight = 1,
+    popup = ~paste(
+      LSOA.name..2021.,
+      "<br>IMD:", Health.Deprivation.and.Disability.Decile..where.1.is.most.deprived.10..of.LSOAs.
+    )
+  ) |>
+  addLegend(
+    pal = pal1,
+    values = ~Health.Deprivation.and.Disability.Decile..where.1.is.most.deprived.10..of.LSOAs.,
+    title = "IMD Health Derivation and Disability (Decile)",
+    position = "topleft"
   )

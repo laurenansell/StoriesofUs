@@ -1,6 +1,5 @@
 ---
 title: "Data Explainer Pack - Hastings"
-author: "Lauren Ansell"
 output: pdf_document
 ---
 
@@ -11,6 +10,7 @@ library(sf)
 library(mapview)
 library(sf)
 library(tmap)
+library(scales)
 
 ## Census Data
 
@@ -41,16 +41,31 @@ hastings_shape<-cbind(hastings_shape,IMD_hastings)
 ```
 
 
-This is the data explainer pack.....
+## Introduction
+
+This data explainer pack is designed to summarise and illustrate four key datasets commonly used to characterise the area and by key decision makers. It is anticipated that the summaries shown here will inform readers how information within the datasets can be visualised and illustrate how similar datasets can be represented.
 
 
 
 ## Area Summary
 
-Castle ward summary here
+Castle ward summary  
 
 
 ## 2021 Census Data
+
+The Office for National Statistics (ONS) conduct a population census every 10 years, providing a snapshot of the UK population, with the next census to be undertaken in 2031. 
+
+Data collected by the census includes:
+
+* Demographics
+* Health
+* Education
+*	Employment and work
+*	Housing
+* Travel and transport
+
+This data is used by local authorities, the NHS, schools and businesses to allocate funding and plan services. Data from previous censuses are also available to understand social and economic trends. 
 
 
 ```{r,echo=FALSE,message=FALSE,warning=FALSE}
@@ -63,7 +78,7 @@ ggplot(age_sex_hastings_total)+
                  position = position_dodge(width = 1))+
   geom_point(aes(x = Age..6.categories., y = total, colour = Sex..2.categories.),
              position = position_dodge(width = 1))+
-  coord_flip()
+  coord_flip()+xlab("Age")+ylab("Total Count")+labs(color='Sex') 
 
 ```
 
@@ -78,6 +93,7 @@ ggplot(ethnicity_sex_hastings_total)+
                  position = position_dodge(width = 1))+
   geom_point(aes(x = Ethnic.group..20.categories., y = total, colour = Sex..2.categories.),
              position = position_dodge(width = 1))+
+  xlab("Ethnicity")+ylab("Total Count")+labs(color='Sex')+
   coord_flip()
 
 ```
@@ -93,7 +109,8 @@ ggplot(education_sex_hastings_total)+
                  position = position_dodge(width = 1))+
   geom_point(aes(x = Highest.level.of.qualification..7.categories., y = total, colour = Sex..2.categories.),
              position = position_dodge(width = 1))+
-  coord_flip()
+  coord_flip()+
+  xlab("Highest Qualification Level")+ylab("Total Count")+labs(color='Sex')
 
 ```
 
@@ -108,54 +125,72 @@ ggplot(disability_sex_hastings_total)+
                  position = position_dodge(width = 1))+
   geom_point(aes(x = Disability..3.categories., y = total, colour = Sex..2.categories.),
              position = position_dodge(width = 1))+
-  coord_flip()
+  xlab("Disabled under the Equality Act")+ylab("Total Count")+labs(color='Sex')
 
 ```
 
 
+\newpage
+
 ## Community Life Survey
 
 
+\newpage
 
 ## Crime Data
 
-![Hastings stop and search heat map]("./Images/Hastings_StopandSearch_Heatmap.png")
+The police make datasets on street-level crime, outcomes and stop and searches from December 2013. The data includes information on:
 
-![Hastings stop and search map]("./Images/Hastings_StopandSearch_map.png")
+*	the force that provided the data about the crime,
+*	geolocation of the crime,
+* crime type,
+*	last outcome,
+*	reason for stop and search,
+*	demographic data.
 
-![Hastings street heat map]("./Images/Hastings_Street_Heatmap.png")
+Crime data can be used to highlight issues within the local area, in particular around safety, and, as with the census data, aid in supporting funding applications.
 
-![Hastings street map]("./Images/Hastings_Street_map.png")
+
+![Hastings stop and search heat map from July 2023 to June 2026]("./Images/Hastings_StopandSearch_Heatmap.png")
+
+![Hastings stop and search map from July 2023 to June 2026 indicating the object of the search]("./Images/Hastings_StopandSearch_map.png")
+
+![Hastings street heat map from July 2023 to June 2026]("./Images/Hastings_Street_Heatmap.png")
+
+![Hastings street map from July 2023 to June 2026 indicating the crime type]("./Images/Hastings_Street_map.png")
 
 ```{r, echo=FALSE,warning=FALSE,message=FALSE}
 
 crime_data_street_hastings |> group_by(Crime.type) |> count() |> 
-  ggplot(aes(x=Crime.type,y=n))+geom_bar(stat = "identity")+
-  coord_flip()
+  ggplot(aes(x=Crime.type,y=n, fill=Crime.type))+geom_bar(stat = "identity")+
+  coord_flip()+theme(legend.position = "none")+xlab("Crime Type")+ylab("Frequency")
 
 ```
 
 ```{r, echo=FALSE,warning=FALSE,message=FALSE}
 
 crime_data_street_hastings |> group_by(Month) |> count() |> 
-  ggplot(aes(x=Month,y=n))+geom_line()
+  ggplot(aes(x=Month,y=n))+geom_line(linewidth = 1)+xlab("Date")+ylab("Frequency")+
+  scale_x_date(breaks = pretty_breaks(10))
 
 ```
 
 ```{r, echo=FALSE,warning=FALSE,message=FALSE}
 
 crime_data_stopandsearch_hastings |> group_by(Object.of.search) |> count() |> 
-  ggplot(aes(x=Object.of.search,y=n))+geom_bar(stat = "identity")+
-  coord_flip()
+  ggplot(aes(x=Object.of.search,y=n,fill=Object.of.search))+geom_bar(stat = "identity")+
+  coord_flip()+theme(legend.position = "none")+xlab("Object of Search")+ylab("Frequency")
 
 ```
 
 
 ```{r, echo=FALSE,warning=FALSE,message=FALSE}
 
+crime_data_stopandsearch_hastings$Self.defined.ethnicity<- factor(crime_data_stopandsearch_hastings$Self.defined.ethnicity)
+
 crime_data_stopandsearch_hastings |> group_by(Self.defined.ethnicity) |> count() |> 
-  ggplot(aes(x=Self.defined.ethnicity,y=n))+geom_bar(stat = "identity")+
-  coord_flip()
+  ggplot(aes(x=Self.defined.ethnicity,y=n,fill=Self.defined.ethnicity))+geom_bar(stat = "identity")+
+  coord_flip()+theme(legend.position = "none")+xlab("Self Defined Ethnicity")+ylab("Frequency")
 
 ```
 
@@ -163,16 +198,16 @@ crime_data_stopandsearch_hastings |> group_by(Self.defined.ethnicity) |> count()
 ```{r, echo=FALSE,warning=FALSE,message=FALSE}
 
 crime_data_stopandsearch_hastings |> group_by(Date) |> count() |> 
-  ggplot(aes(x=Date,y=n))+geom_line()
+  ggplot(aes(x=Date,y=n))+geom_line(linewidth = 1)+
+  scale_x_date(breaks = pretty_breaks(10))+xlab("Date")+ylab("Frequency")
 
 ```
+
+\newpage
 
 ## IMD Data
 
-```{r, echo=FALSE,message=FALSE,warning=FALSE}
 
+![IMD Health, deprivation and disability rank for Castle Ward, Hastings ]("./Images/Hastings_HealthIMD_Rank.png")
 
-qtm(hastings_shape,fill ="Health.Deprivation.and.Disability.Rank..where.1.is.most.deprived.",
-    fill.title="Index of Multiple Deprivation (Rank)")
-
-```
+![IMD Health, deprivation and disability decile for Castle Ward, Hastings ]("./Images/Hastings_HealthIMD_Decile.png")
