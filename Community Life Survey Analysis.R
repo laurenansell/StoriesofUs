@@ -18,6 +18,8 @@
 library(tidyverse)
 library(haven)
 library(likert)
+library(igraph)
+library(ggraph)
 
 
 ## Read in the data
@@ -135,19 +137,106 @@ help_type<-c("Raising or handling money/taking part in sponsored events",
              "Any other help",
              "None of the above")
 
+Hastings_CLS_unpaidhelp$total<-rowSums(Hastings_CLS_unpaidhelp[,1:14])
+
+help_total<-colSums(Hastings_CLS_unpaidhelp[,1:14])
+
+unpaid_hastings<-cbind(help_type,help_total) |> as.data.frame()
+
+
+ggplot(unpaid_hastings,aes(x=help_type,y=help_total))+geom_bar(stat="identity")+
+  coord_flip()
 
 
 
+write.csv(Hastings_CLS_unpaidhelp,"../Data for Explainer Pack/hastings_cls_unpaidhelp.csv",row.names = FALSE)
+
+## Network plot to see the relationships
+
+# Remove total and none column
+groups <- Hastings_CLS_unpaidhelp[,1:13]
+
+# Create co-occurrence matrix
+co_mat <- t(as.matrix(groups)) %*% as.matrix(groups)
+
+# Remove self-connections
+diag(co_mat) <- 0
+
+# Convert to edge list
+edges <- as.data.frame(as.table(co_mat)) |>
+  rename(from = Var1,
+         to = Var2,
+         weight = Freq) |>
+  filter(weight > 0)
+
+# Remove duplicate edges
+edges <- edges |>
+  rowwise() |>
+  mutate(pair = paste(sort(c(from, to)), collapse = "_")) |>
+  ungroup() |>
+  distinct(pair, .keep_all = TRUE) |>
+  select(-pair)
+
+# Node frequencies
+nodes <- data.frame(
+  name = colnames(groups),
+  freq = colSums(groups)
+)
+
+# Create graph
+g <- graph_from_data_frame(
+  d = edges,
+  vertices = nodes,
+  directed = FALSE
+)
+
+# Plot
+ggraph(g, layout = "fr") +
+  geom_edge_link(aes(width = weight),
+                 alpha = 0.5,
+                 colour = "steelblue") +
+  geom_node_point(aes(size = freq),
+                  colour = "orange") +
+  geom_node_text(aes(label = name),
+                 repel = TRUE) +
+  scale_edge_width(range = c(0.5, 5)) +
+  theme_void()
 
 
+edges <- edges |>
+  filter(weight >= 3)
 
+labels <- c(
+  FUnPd1A = "Raising money",
+  FUnPd1B = "Committee member",
+  FUnPd1C = "Encouraging others",
+  FUnPd1D = "Helping to run",
+  FUnPd1E = "Visiting people",
+  FUnPd1F = "Mentoring",
+  FUnPd1G = "Giving advice",
+  FUnPd1H = "Admin",
+  FUnPd1I = "Transport",
+  FUnPd1J = "Representing",
+  FUnPd1K = "Campaigning",
+  FUnPd1L = "Other practical help",
+  FUnPd1M = "Other help"
+)
 
+nodes<-cbind(labels,nodes)
 
+nodes<-nodes |> select(labels,freq)
 
-
-
-
-
+# Plot
+ggraph(g, layout = "fr") +
+  geom_edge_link(aes(width = weight),
+                 alpha = 0.5,
+                 colour = "steelblue") +
+  geom_node_point(aes(size = freq),
+                  colour = "orange") +
+  geom_node_text(aes(label = labels),
+                 repel = TRUE) +
+  scale_edge_width(range = c(0.5, 5)) +
+  theme_void()
 
 
 
