@@ -239,32 +239,70 @@ ggraph(g, layout = "fr") +
   theme_void()
 
 
+## Assets information
 
 
+Hastings_CLS_assets<-Hastings_CLS_reduced |> select(Assets2A_a,Assets2A_b,Assets2A_c,Assets2A_d,Assets2B_a,Assets2B_b,
+                                                    Assets2B_c,Assets2B_d,Assets2C_a,Assets2C_b,Assets2C_c,Assets2C_d,
+                                                    Assets2D_a,Assets2D_b,Assets2D_c,Assets2D_d,Assets2E_a,Assets2E_b,
+                                                    Assets2E_c,Assets2E_d,Assets2F_a,Assets2F_b,Assets2F_c,Assets2F_d,
+                                                    Assets2G_a,Assets2G_b,Assets2G_c,Assets2G_d,Assets2H_a,Assets2H_b,
+                                                    Assets2H_c,Assets2H_d,Assets2I_a,Assets2I_b,Assets2I_c,Assets2I_d,
+                                                    Assets2J_a,Assets2J_b,Assets2J_c,Assets2J_d,Assets2K_a,Assets2K_b,
+                                                    Assets2K_c,Assets2K_d,Assets2K_e,Assets2L_a,Assets2L_b,Assets2L_c,
+                                                    Assets2L_d)
 
+## will have to handle the NAs differently here, change the NAs to 0.
 
+Hastings_CLS_assets <- Hastings_CLS_assets %>% replace(is.na(.), 0)
 
+## group the responses depending on which assets they are assoicated with
 
+## General/grocery shop (Assets2A)
 
+hastings_generalshop<-Hastings_CLS_assets |> select(Assets2A_a,Assets2A_b,Assets2A_c,Assets2A_d)
 
+## Pub/bar (Assets2B)
 
+hastings_bar<-Hastings_CLS_assets |> select(Assets2B_a,Assets2B_b,Assets2B_c,Assets2B_d)
 
+## Park (Assets2C)
 
+hastings_park<-Hastings_CLS_assets |> select(Assets2C_a,Assets2C_b,Assets2C_c,Assets2C_d)
 
+## Library (Assets2D)
 
+hastings_library<-Hastings_CLS_assets |> select(Assets2D_a,Assets2D_b,Assets2D_c,Assets2D_d)
 
+## Restaurant/cafe (Assets2E)
 
+hastings_cafe<-Hastings_CLS_assets |> select(Assets2E_a,Assets2E_b,Assets2E_c,Assets2E_d)
 
+## Community centre/hall (Assets2F)
 
+hastings_communityhall<-Hastings_CLS_assets |> select(Assets2F_a,Assets2F_b,Assets2F_c,Assets2F_d)
 
+## Sports facilities (Assets2G)
 
+hastings_sportsfacilites<-Hastings_CLS_assets |> select(Assets2G_a,Assets2G_b,Assets2G_c,Assets2G_d)
 
+## Health centre/GP (Assets2H)
 
+hastings_gp<-Hastings_CLS_assets |> select(Assets2H_a,Assets2H_b,Assets2H_c,Assets2H_d)
 
+## Chemist or pharmacy (Assets2I)
 
+hastings_chemist<-Hastings_CLS_assets |> select(Assets2I_a,Assets2I_b,Assets2I_c,Assets2I_d)
 
+## Post Office (Assets2J)
 
+hastings_postoffice<-Hastings_CLS_assets |> select(Assets2J_a,Assets2J_b,Assets2J_c,Assets2J_d)
 
+## Place of worship for my faith or religion, such as a church, mosque, temple (Assets2K)
 
+hastings_worship<-Hastings_CLS_assets |> select(Assets2K_a,Assets2K_b,Assets2K_c,Assets2K_d)
 
+## Public transport links (Assets2L)	
+
+hastings_publictransport<-Hastings_CLS_assets |> select(Assets2L_a,Assets2L_b,Assets2L_c,Assets2L_d)
 
