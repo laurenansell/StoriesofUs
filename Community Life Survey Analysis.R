@@ -11,6 +11,7 @@
 
 ## Modified on: 11/08/2026
 ##              12/08/2026
+##              20/08/2026
 
 
 ## Load in the required libraries
@@ -36,7 +37,7 @@ Hastings_CLS<-data |> filter(lad25nm==113) ## 464 observations for Hastings
 
 Plymouth_CLS<-data |> filter(lad25nm==186) ## 657 observations for Plymouth (will need to filter down for (Stonehouse)
 
-## Clean the emvironment
+## Clean the environment
 
 rm(data)
 
@@ -87,3 +88,94 @@ plot(lik)
 
 Hastings_CLS_reduced |> group_by(SPull) |> count() |> 
   ggplot(aes(x=SPull,y=n))+geom_bar(stat="identity")
+
+
+## Pull together the multiple answer questions
+
+## Unpaid help
+
+Hastings_CLS_unpaidhelp<-Hastings_CLS_reduced |> select(FUnPd1A,FUnPd1B,FUnPd1C,FUnPd1D,FUnPd1E,FUnPd1F,
+                                                        FUnPd1G,FUnPd1H,FUnPd1I,FUnPd1J,FUnPd1K,FUnPd1L,
+                                                        FUnPd1M,FUnPd1N)
+
+## Lots of NAs
+
+Hastings_CLS_unpaidhelp<-Hastings_CLS_unpaidhelp[complete.cases(Hastings_CLS_unpaidhelp), ]
+
+
+## Removing all the NAs leaves a total of 276 observations.
+
+## The total organisations that people support
+
+Hastings_CLS_unpaidhelp$total<-rowSums(Hastings_CLS_unpaidhelp[,1:13]) ## don't include none of the above
+
+
+Hastings_CLS_unpaidhelp |> group_by(total) |> count() |> 
+  ggplot(aes(x=total,y=n))+geom_bar(stat="identity") ## remove the first entry for report
+
+
+## Which is the most popular for support
+
+colSums(Hastings_CLS_unpaidhelp)
+
+## Create a dataframe for these results
+
+help_type<-c("Raising or handling money/taking part in sponsored events",
+             "Leading a group/member of a committee",
+             "Getting other people involved",
+             "Organising or helping to run an activity or event",
+             "Visiting people",
+             "Befriending or mentoring people",
+             "Giving advice/information/counselling",
+             "Secretarial, admin or clerical work",
+             "Providing transport/driving",
+             "Representing",
+             "Campaigning",
+             "Other practical help (e.g. helping out at school, shopping)",
+             "Any other help",
+             "None of the above")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
