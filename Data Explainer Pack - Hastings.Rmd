@@ -12,6 +12,8 @@ library(sf)
 library(tmap)
 library(scales)
 library(likert)
+library(igraph)
+library(ggraph)
 
 ## Census Data
 
@@ -27,6 +29,7 @@ ethnicity_sex_hastings<-read.csv("../Data for Explainer Pack/hastings_ethnicity_
 ## CLS
 
 Hastings_CLS_reduced<-read.csv("../Data for Explainer Pack/hastings_cls.csv")
+Hastings_CLS_unpaidhelp<-read.csv("../Data for Explainer Pack/hastings_cls_unpaidhelp.csv")
 
 ## Crime Data
 crime_data_street_hastings<-read.csv("../Data for Explainer Pack/hastings_street.csv")
@@ -174,6 +177,85 @@ Hastings_CLS_reduced |> group_by(SPull) |> count() |>
 
 ```
 
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+## Network plot to see the relationships
+
+# Remove total and none column
+groups <- Hastings_CLS_unpaidhelp[,1:13]
+
+# Create co-occurrence matrix
+co_mat <- t(as.matrix(groups)) %*% as.matrix(groups)
+
+# Remove self-connections
+diag(co_mat) <- 0
+
+# Convert to edge list
+edges <- as.data.frame(as.table(co_mat)) |>
+  rename(from = Var1,
+         to = Var2,
+         weight = Freq) |>
+  filter(weight > 0)
+
+# Remove duplicate edges
+edges <- edges |>
+  rowwise() |>
+  mutate(pair = paste(sort(c(from, to)), collapse = "_")) |>
+  ungroup() |>
+  distinct(pair, .keep_all = TRUE) |>
+  select(-pair)
+
+# Node frequencies
+nodes <- data.frame(
+  name = colnames(groups),
+  freq = colSums(groups)
+)
+
+# Create graph
+g <- graph_from_data_frame(
+  d = edges,
+  vertices = nodes,
+  directed = FALSE
+)
+
+
+
+edges <- edges |>
+  filter(weight >= 3)
+
+labels <- c(
+  FUnPd1A = "Raising money",
+  FUnPd1B = "Committee member",
+  FUnPd1C = "Encouraging others",
+  FUnPd1D = "Helping to run",
+  FUnPd1E = "Visiting people",
+  FUnPd1F = "Mentoring",
+  FUnPd1G = "Giving advice",
+  FUnPd1H = "Admin",
+  FUnPd1I = "Transport",
+  FUnPd1J = "Representing",
+  FUnPd1K = "Campaigning",
+  FUnPd1L = "Other practical help",
+  FUnPd1M = "Other help"
+)
+
+nodes<-cbind(labels,nodes)
+
+nodes<-nodes |> select(labels,freq)
+
+# Plot
+ggraph(g, layout = "fr") +
+  geom_edge_link(aes(width = weight),
+                 alpha = 0.5,
+                 colour = "steelblue") +
+  geom_node_point(aes(size = freq),
+                  colour = "orange") +
+  geom_node_text(aes(label = labels),
+                 repel = TRUE) +
+  scale_edge_width(range = c(0.5, 5)) +
+  theme_void()
+
+```
+
 
 \newpage
 
@@ -191,13 +273,13 @@ The police make datasets on street-level crime, outcomes and stop and searches f
 Crime data can be used to highlight issues within the local area, in particular around safety, and, as with the census data, aid in supporting funding applications.
 
 
-![Hastings stop and search heat map from July 2023 to June 2026]("./Images/Hastings_StopandSearch_Heatmap.png")
+![Hastings stop and search heat map from July 2023 to June 2026](./Images/Hastings_StopandSearch_Heatmap.png)
 
-![Hastings stop and search map from July 2023 to June 2026 indicating the object of the search]("./Images/Hastings_StopandSearch_map.png")
+![Hastings stop and search map from July 2023 to June 2026 indicating the object of the search](./Images/Hastings_StopandSearch_map.png)
 
-![Hastings street heat map from July 2023 to June 2026]("./Images/Hastings_Street_Heatmap.png")
+![Hastings street heat map from July 2023 to June 2026](./Images/Hastings_Street_Heatmap.png)
 
-![Hastings street map from July 2023 to June 2026 indicating the crime type]("./Images/Hastings_Street_map.png")
+![Hastings street map from July 2023 to June 2026 indicating the crime type](./Images/Hastings_Street_map.png)
 
 ```{r, echo=FALSE,warning=FALSE,message=FALSE}
 
@@ -248,6 +330,6 @@ crime_data_stopandsearch_hastings |> group_by(Date) |> count() |>
 ## IMD Data
 
 
-![IMD Health, deprivation and disability rank for Castle Ward, Hastings ]("./Images/Hastings_HealthIMD_Rank.png")
+![IMD Health, deprivation and disability rank for Castle Ward, Hastings ](./Images/Hastings_HealthIMD_Rank.png)
 
-![IMD Health, deprivation and disability decile for Castle Ward, Hastings ]("./Images/Hastings_HealthIMD_Decile.png")
+![IMD Health, deprivation and disability decile for Castle Ward, Hastings ](./Images/Hastings_HealthIMD_Decile.png)
