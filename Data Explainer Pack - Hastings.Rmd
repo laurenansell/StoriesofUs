@@ -57,8 +57,21 @@ This data explainer pack is designed to summarise and illustrate four key datase
 
 ## Area Summary
 
-Castle ward summary  
+Castle Ward is a densely populated urban ward within Hastings, characterised by a diverse population, a relatively young to middle-aged age structure, a broad mix of ethnic backgrounds, and significant levels of deprivation and health. 
 
+The 2021 Census data shows that Castle Ward has residents across all age groups, with particularly large proportions of working-age adults aged 25 to 64. There are also substantial numbers of children and young people, alongside a notable older population aged 65 and over. 
+
+Educational attainment varies considerably across the ward. Census data indicates a mixture of residents holding higher-level qualifications and others with low or no formal qualifications. 
+
+Findings from the Community Life Survey suggest that many residents believe local people can influence their neighbourhood and make positive changes when they become involved. A majority of respondents report feeling a sense of belonging to their immediate neighbourhood, indicating a generally positive level of community attachment.
+
+Residents also reported participating in a range of voluntary and community activities, including fundraising, committee work, mentoring, giving advice, practical help and supporting local organisations. This demonstrates a valuable community asset base and a willingness among residents to contribute to local improvement efforts.
+
+Crime data for Hastings indicates violence and sexual offences account for the largest share of recorded crime, followed by anti-social behaviour and shoplifting. The stop and search data indicates that controlled drugs are the most common reason for searches, with activity distributed across different parts of the town. 
+
+The Index of Multiple Deprivation (IMD) data shows that Castle Ward experiences significant levels of deprivation, particularly in relation to health and disability outcomes. The ward's ranking and decile position indicate that many neighbourhoods experience challenges associated with poorer health, lower incomes and wider social disadvantage compared with national averages.
+
+\newpage
 
 ## 2021 Census Data
 
