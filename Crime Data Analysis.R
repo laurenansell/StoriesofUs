@@ -12,6 +12,7 @@
 ## Modified on: 07/07/2026
 ##              10/08/2026
 ##              12/08/2026
+##              25/08/2026
 
 ## Load in the required libraries
 library(tidyverse)
@@ -191,6 +192,8 @@ leaflet(crime_data_street_hastings) %>%
 
 ## Plymouth
 
+## Street level analysis
+
 crime_data_street_plymouth<-crime_data_street_all |> filter(LSOA.name %in% plymouth_lsoas)
 
 crime_data_outcomes_plymouth<-crime_data_outcomes_all |> filter(LSOA.name %in% plymouth_lsoas)
@@ -216,13 +219,66 @@ min(crime_data_outcomes_plymouth$Latitude) ## 50.36098
 crime_data_stopandsearch_plymouth<-crime_data_stopandsearch_all |> filter(Latitude>50.36098 & Latitude<50.37173) |> 
   filter(Longitude>-4.164925 & Longitude< -4.144637)
 
+## Save data for the explainer packs
+
+write.csv(crime_data_street_plymouth,"../Data for Explainer Pack/plymouth_street.csv",row.names = FALSE)
+write.csv(crime_data_stopandsearch_plymouth,"../Data for Explainer Pack/plymouth_stopandsearch.csv",row.names = FALSE)
+write.csv(crime_data_outcomes_plymouth,"../Data for Explainer Pack/plymouth_outcomes.csv",row.names = FALSE)
+
+
 ## Convert some of the data types
 
 str(crime_data_street_plymouth)
 
 crime_data_street_plymouth$Month<-as.Date(paste(crime_data_street_plymouth$Month, "-01", sep=""))
 
+crime_data_stopandsearch_plymouth$Date<-as.POSIXct(crime_data_stopandsearch_plymouth$Date)
 
 ## Street level analysis
 
-crime_data_street_plymouth |> group_by()
+crime_data_street_plymouth |> group_by(Crime.type) |> count() |> 
+  ggplot(aes(x=Crime.type,y=n))+geom_bar(stat = "identity")+
+  coord_flip()
+
+
+mapview(crime_data_street_plymouth, xcol = "Longitude", ycol = "Latitude", colour="Crime.type", 
+        crs = 4269, grid = FALSE)
+
+
+leaflet() |> setView(lng = 0.580323, lat = 50.85903, zoom = 15) |> 
+  addTiles()
+
+
+factpal <- colorFactor(topo.colors(15), crime_data_street_plymouth$Crime.type)
+factpal1 <- colorFactor(topo.colors(10), crime_data_stopandsearch_plymouth$Object.of.search)
+
+leaflet(data = crime_data_street_plymouth) |> addTiles() |>
+  addCircleMarkers(~Longitude, ~Latitude, popup = ~as.character(Crime.type),
+                   color = ~factpal(Crime.type)) |> 
+  addLegend(pal = factpal, values = ~Crime.type, opacity = 1,position = "topleft")
+
+leaflet(data =crime_data_stopandsearch_plymouth) |> addTiles() |>
+  addCircleMarkers(~Longitude, ~Latitude, popup = ~as.character(Object.of.search),
+                   color=~factpal1(Object.of.search)) |> 
+  addLegend(pal = factpal1, values = ~Object.of.search, opacity = 1,position = "topleft")
+
+leaflet(crime_data_stopandsearch_plymouth) %>%
+  addTiles() %>%  # Add default OpenStreetMap background
+  addHeatmap(
+    lng = ~Longitude, 
+    lat = ~Latitude, 
+    blur = 20, 
+    max = 0.05, 
+    radius = 15
+  )
+
+
+leaflet(crime_data_street_plymouth) %>%
+  addTiles() %>%  # Add default OpenStreetMap background
+  addHeatmap(
+    lng = ~Longitude, 
+    lat = ~Latitude, 
+    blur = 20, 
+    max = 0.05, 
+    radius = 15
+  )
