@@ -14,6 +14,7 @@
 ##              20/08/2026
 ##              24/08/2026
 ##              25/08/2026
+##              03/09/2026
 
 ## Load in the required libraries
 library(tidyverse)
@@ -21,6 +22,7 @@ library(haven)
 library(likert)
 library(igraph)
 library(ggraph)
+library(fmsb)
 
 
 ## Read in the data
@@ -263,6 +265,7 @@ Hastings_CLS_assets <- Hastings_CLS_assets %>% replace(is.na(.), 0)
 
 distance <- c("15-20 mintues", "Further but still local","None","Not sure/Don't know")
 
+
 ## General/grocery shop (Assets2A)
 
 hastings_generalshop<-Hastings_CLS_assets |> select(Assets2A_a,Assets2A_b,Assets2A_c,Assets2A_d)
@@ -273,9 +276,44 @@ generalshop_hastings<-cbind(distance,hastings_generalshop_total) |> as.data.fram
 
 generalshop_hastings$hastings_generalshop_total<-as.numeric(generalshop_hastings$hastings_generalshop_total)
 
+generalshop_hastings<-generalshop_hastings |> 
+  mutate(Percentage = (hastings_generalshop_total/sum(hastings_generalshop_total))*100)
+
 ggplot(generalshop_hastings,aes(x=distance,y=hastings_generalshop_total))+geom_bar(stat="identity")+
   coord_flip()
   
+
+generalshop_hastings_scores <- data.frame(
+  Minutes = 87.3983740,
+  Still_local = 9.7560976,
+  None = 0.8130081,
+  Not_sure = 2.0325203
+)
+
+radar_data <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  generalshop_hastings_scores
+)
+
+colnames(radar_data) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
 
 ## Pub/bar (Assets2B)
 
@@ -287,8 +325,44 @@ bar_hastings<-cbind(distance,hastings_bar_total) |> as.data.frame()
 
 bar_hastings$hastings_bar_total<-as.numeric(bar_hastings$hastings_bar_total)
 
+bar_hastings<-bar_hastings |> 
+  mutate(Percentage = (hastings_bar_total/sum(hastings_bar_total))*100)
+
 ggplot(bar_hastings,aes(x=distance,y=hastings_bar_total))+geom_bar(stat="identity")+
   coord_flip()
+
+
+bar_hastings_scores <- data.frame(
+  Minutes = 74.186992,
+  Still_local = 18.699187,
+  None = 3.455285,
+  Not_sure = 3.658537
+)
+
+radar_data <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  bar_hastings_scores
+)
+
+colnames(radar_data) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
 
 ## Park (Assets2C)
 
@@ -300,8 +374,43 @@ park_hastings<-cbind(distance,hastings_park_total) |> as.data.frame()
 
 park_hastings$hastings_park_total<-as.numeric(park_hastings$hastings_park_total)
 
+park_hastings<-park_hastings |> 
+  mutate(Percentage = (hastings_park_total/sum(hastings_park_total))*100)
+
 ggplot(park_hastings,aes(x=distance,y=hastings_park_total))+geom_bar(stat="identity")+
   coord_flip()
+
+park_hastings_scores <- data.frame(
+  Minutes = 70.247934,
+  Still_local = 22.727273,
+  None = 4.545455,
+  Not_sure = 2.479339
+)
+
+radar_data <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  park_hastings_scores
+)
+
+colnames(radar_data) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
 
 ## Library (Assets2D)
 
@@ -313,8 +422,44 @@ library_hastings<-cbind(distance,hastings_library_total) |> as.data.frame()
 
 library_hastings$hastings_library_total<-as.numeric(library_hastings$hastings_library_total)
 
+library_hastings<-library_hastings |> 
+  mutate(Percentage = (hastings_library_total/sum(hastings_library_total))*100)
+
 ggplot(library_hastings,aes(x=distance,y=hastings_library_total))+geom_bar(stat="identity")+
   coord_flip()
+
+library_hastings_scores <- data.frame(
+  Minutes = 39.658849,
+  Still_local = 37.739872,
+  None = 14.925373,
+  Not_sure = 7.675906
+)
+
+radar_data <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  library_hastings_scores
+)
+
+colnames(radar_data) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
+
 
 ## Restaurant/cafe (Assets2E)
 
@@ -326,8 +471,45 @@ cafe_hastings<-cbind(distance,hastings_cafe_total) |> as.data.frame()
 
 cafe_hastings$hastings_cafe_total<-as.numeric(cafe_hastings$hastings_cafe_total)
 
+cafe_hastings<-cafe_hastings |> 
+  mutate(Percentage = (hastings_cafe_total/sum(hastings_cafe_total))*100)
+
 ggplot(cafe_hastings,aes(x=distance,y=hastings_cafe_total))+geom_bar(stat="identity")+
   coord_flip()
+
+
+cafe_hastings_scores <- data.frame(
+  Minutes = 66.8008048,
+  Still_local = 26.7605634,
+  None = 5.8350101,
+  Not_sure = 0.6036217
+)
+
+radar_data <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  cafe_hastings_scores
+)
+
+colnames(radar_data) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
+
 
 ## Community centre/hall (Assets2F)
 
@@ -339,8 +521,44 @@ communityhall_hastings<-cbind(distance,hastings_communityhall_total) |> as.data.
 
 communityhall_hastings$hastings_communityhall_total<-as.numeric(communityhall_hastings$hastings_communityhall_total)
 
+communityhall_hastings<-communityhall_hastings |> 
+  mutate(Percentage = (hastings_communityhall_total/sum(hastings_communityhall_total))*100)
+
 ggplot(communityhall_hastings,aes(x=distance,y=hastings_communityhall_total))+geom_bar(stat="identity")+
   coord_flip()
+
+communityhall_hastings_scores <- data.frame(
+  Minutes = 56.935818,
+  Still_local = 21.739130,
+  None = 7.039337,
+  Not_sure = 14.285714
+)
+
+radar_data <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  communityhall_hastings_scores
+)
+
+colnames(radar_data) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
+
 
 ## Sports facilities (Assets2G)
 
@@ -352,8 +570,44 @@ sportsfacilities_hastings<-cbind(distance,hastings_sportsfacilities_total) |> as
 
 sportsfacilities_hastings$hastings_sportsfacilities_total<-as.numeric(sportsfacilities_hastings$hastings_sportsfacilities_total)
 
+sportsfacilities_hastings<-sportsfacilities_hastings |> 
+  mutate(Percentage = (hastings_sportsfacilities_total/sum(hastings_sportsfacilities_total))*100)
+
 ggplot(sportsfacilities_hastings,aes(x=distance,y=hastings_sportsfacilities_total))+geom_bar(stat="identity")+
   coord_flip()
+
+
+sportsfacilities_hastings_scores <- data.frame(
+  Minutes = 38.75000,
+  Still_local = 42.08333,
+  None = 12.29167,
+  Not_sure = 6.87500
+)
+
+radar_data <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  sportsfacilities_hastings_scores
+)
+
+colnames(radar_data) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
 
 ## Health centre/GP (Assets2H)
 
@@ -365,8 +619,43 @@ gp_hastings<-cbind(distance,hastings_gp_total) |> as.data.frame()
 
 gp_hastings$hastings_gp_total<-as.numeric(gp_hastings$hastings_gp_total)
 
+gp_hastings<-gp_hastings |> 
+  mutate(Percentage = (hastings_gp_total/sum(hastings_gp_total))*100)
+
 ggplot(gp_hastings,aes(x=distance,y=hastings_gp_total))+geom_bar(stat="identity")+
   coord_flip()
+
+gp_hastings_scores <- data.frame(
+  Minutes = 57.809331,
+  Still_local = 35.294118,
+  None = 4.462475,
+  Not_sure = 2.434077
+)
+
+radar_data <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  gp_hastings_scores
+)
+
+colnames(radar_data) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
 
 ## Chemist or pharmacy (Assets2I)
 
@@ -378,8 +667,43 @@ chemist_hastings<-cbind(distance,hastings_chemist_total) |> as.data.frame()
 
 chemist_hastings$hastings_chemist_total<-as.numeric(chemist_hastings$hastings_chemist_total)
 
+chemist_hastings<-chemist_hastings |> 
+  mutate(Percentage = (hastings_chemist_total/sum(hastings_chemist_total))*100)
+
 ggplot(chemist_hastings,aes(x=distance,y=hastings_chemist_total))+geom_bar(stat="identity")+
   coord_flip()
+
+chemist_hastings_scores <- data.frame(
+  Minutes = 76.659960,
+  Still_local = 20.321932,
+  None = 2.213280,
+  Not_sure = 0.804829
+)
+
+radar_data <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  chemist_hastings_scores
+)
+
+colnames(radar_data) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
 
 ## Post Office (Assets2J)
 
@@ -391,8 +715,43 @@ postoffice_hastings<-cbind(distance,hastings_postoffice_total) |> as.data.frame(
 
 postoffice_hastings$hastings_postoffice_total<-as.numeric(postoffice_hastings$hastings_postoffice_total)
 
+postoffice_hastings<-postoffice_hastings |> 
+  mutate(Percentage = (hastings_postoffice_total/sum(hastings_postoffice_total))*100)
+
 ggplot(postoffice_hastings,aes(x=distance,y=hastings_postoffice_total))+geom_bar(stat="identity")+
   coord_flip()
+
+postoffice_hastings_scores <- data.frame(
+  Minutes = 68.801653,
+  Still_local = 23.347107,
+  None = 6.198347,
+  Not_sure = 1.652893
+)
+
+radar_data <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  postoffice_hastings_scores
+)
+
+colnames(radar_data) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
 
 ## Place of worship for my faith or religion, such as a church, mosque, temple (Assets2K)
 
@@ -404,8 +763,43 @@ worship_hastings<-cbind(distance,hastings_worship_total) |> as.data.frame()
 
 worship_hastings$hastings_worship_total<-as.numeric(worship_hastings$hastings_worship_total)
 
+worship_hastings<-worship_hastings |> 
+  mutate(Percentage = (hastings_worship_total/sum(hastings_worship_total))*100)
+
 ggplot(worship_hastings,aes(x=distance,y=hastings_worship_total))+geom_bar(stat="identity")+
   coord_flip()
+
+worship_hastings_scores <- data.frame(
+  Minutes = 71.348315,
+  Still_local = 19.101124,
+  None = 3.370787,
+  Not_sure = 6.179775
+)
+
+radar_data <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  worship_hastings_scores
+)
+
+colnames(radar_data) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
 
 ## Public transport links (Assets2L)	
 
@@ -417,9 +811,94 @@ publictransport_hastings<-cbind(distance,hastings_publictransport_total) |> as.d
 
 publictransport_hastings$hastings_publictransport_total<-as.numeric(publictransport_hastings$hastings_publictransport_total)
 
+publictransport_hastings<-publictransport_hastings |> 
+  mutate(Percentage = (hastings_publictransport_total/sum(hastings_publictransport_total))*100)
+
 ggplot(publictransport_hastings,aes(x=distance,y=hastings_publictransport_total))+geom_bar(stat="identity")+
   coord_flip()
 
+publictransport_hastings_scores <- data.frame(
+  Minutes = 86.1932939,
+  Still_local = 11.8343195,
+  None = 0.7889546,
+  Not_sure = 1.1834320
+)
+
+radar_data <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  publictransport_hastings_scores
+)
+
+colnames(radar_data) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
+
+## Combined radar plots
+
+asset_data <- data.frame(
+  Minutes = c(87.3983740,86.1932939,71.348315),
+  Still_local = c(9.7560976,11.8343195,19.101124),
+  None = c(0.8130081,0.7889546,3.370787),
+  Not_sure = c(2.0325203,1.1834320,6.179775)
+)
+
+rownames(asset_data) <- c(
+  "General shop",
+  "Public transport",
+  "Place of worship"
+)
+
+
+radar_data <- rbind(
+  rep(100, ncol(asset_data)),
+  rep(0, ncol(asset_data)),
+  asset_data
+)
+
+radarchart(
+  radar_data,
+  axistype = 1,
+  
+  # Colours for each ward
+  pcol = c("red", "blue", "darkgreen"),
+  pfcol = c(
+    rgb(1,0,0,0.2),
+    rgb(0,0,1,0.2),
+    rgb(0,0.5,0,0.2)
+  ),
+  plwd = 2,
+  plty = 1,
+  
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
+
+legend(
+  "topright",
+  legend = rownames(radar_data[3:5,]),
+  col = c("red", "blue", "darkgreen"),
+  lty = 1,
+  lwd = 2,
+  bty = "n"
+)
 
 
 ## Plymouth
