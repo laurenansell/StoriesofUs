@@ -45,6 +45,7 @@ IMD_plymouth<-IMD |> filter(LSOA.name..2021. %in% plymouth_lsoas)
 write.csv(IMD_hastings,"../Data for Explainer Pack/hastings_IMD.csv",row.names = FALSE)
 write.csv(IMD_plymouth,"../Data for Explainer Pack/plymouth_IMD.csv",row.names = FALSE)
 
+## Hastings
 
 hastings_shape<-cbind(hastings_shape,IMD_hastings)
 
@@ -83,7 +84,6 @@ leaflet(hastings_shape) |>
   )
 
 
-
 pal1 <- colorNumeric(
   palette = "viridis",
   domain = hastings_shape$Health.Deprivation.and.Disability.Decile..where.1.is.most.deprived.10..of.LSOAs.
@@ -106,4 +106,71 @@ leaflet(hastings_shape) |>
     values = ~Health.Deprivation.and.Disability.Decile..where.1.is.most.deprived.10..of.LSOAs.,
     title = "IMD Health Derivation and Disability (Decile)",
     position = "topleft"
+  )
+
+
+## Plymouth
+
+plymouth_shape<-read_sf( "../Shapefiles/plymouth_LSOAs.shp")
+IMD_plymouth<-read.csv("../Data for Explainer Pack/plymouth_IMD.csv")
+
+plymouth_shape<-cbind(plymouth_shape,IMD_plymouth)
+
+qtm(plymouth_shape,fill ="Health.Deprivation.and.Disability.Rank..where.1.is.most.deprived.",
+    fill.title="Index of Multiple Deprivation (Rank)")
+
+
+ggplot(plymouth_shape) + geom_sf(aes(fill = Health.Deprivation.and.Disability.Rank..where.1.is.most.deprived.)) +
+  scale_fill_viridis_c() +theme_minimal()
+
+# Convert from BNG to WGS84
+plymouth_shape <- st_transform(plymouth_shape, 4326)
+
+pal <- colorNumeric(
+  palette = "viridis",
+  domain = plymouth_shape$Health.Deprivation.and.Disability.Rank..where.1.is.most.deprived.
+)
+
+leaflet(plymouth_shape) |>
+  addTiles() |>
+  addPolygons(
+    fillColor = ~pal(Health.Deprivation.and.Disability.Rank..where.1.is.most.deprived.),
+    fillOpacity = 0.7,
+    color = "white",
+    weight = 1,
+    popup = ~paste(
+      LSOA.name..2021.,
+      "<br>IMD:", Health.Deprivation.and.Disability.Rank..where.1.is.most.deprived.
+    )
+  ) |>
+  addLegend(
+    pal = pal,
+    values = ~Health.Deprivation.and.Disability.Rank..where.1.is.most.deprived.,
+    title = "IMD Health Derivation and Disability (Rank)",
+    position = "topright"
+  )
+
+
+pal1 <- colorNumeric(
+  palette = "viridis",
+  domain = plymouth_shape$Health.Deprivation.and.Disability.Decile..where.1.is.most.deprived.10..of.LSOAs.
+)
+
+leaflet(plymouth_shape) |>
+  addTiles() |>
+  addPolygons(
+    fillColor = ~pal1(Health.Deprivation.and.Disability.Decile..where.1.is.most.deprived.10..of.LSOAs.),
+    fillOpacity = 0.7,
+    color = "white",
+    weight = 1,
+    popup = ~paste(
+      LSOA.name..2021.,
+      "<br>IMD:", Health.Deprivation.and.Disability.Decile..where.1.is.most.deprived.10..of.LSOAs.
+    )
+  ) |>
+  addLegend(
+    pal = pal1,
+    values = ~Health.Deprivation.and.Disability.Decile..where.1.is.most.deprived.10..of.LSOAs.,
+    title = "IMD Health Derivation and Disability (Decile)",
+    position = "bottomright"
   )
