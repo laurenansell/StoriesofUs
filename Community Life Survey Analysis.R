@@ -23,7 +23,7 @@ library(likert)
 library(igraph)
 library(ggraph)
 library(fmsb)
-
+library(cowplot)
 
 ## Read in the data
 data<-read_sav("community_life_survey_2024_25_annual_data_safeguard.sav")
@@ -290,13 +290,13 @@ generalshop_hastings_scores <- data.frame(
   Not_sure = 2.0325203
 )
 
-radar_data <- rbind(
+radar_data1 <- rbind(
   c(100, 100, 100, 100),
   c(0, 0, 0, 0),
   generalshop_hastings_scores
 )
 
-colnames(radar_data) <- c(
+colnames(radar_data1) <- c(
   "15-20 mintues",
   "Further but still local",
   "None",
@@ -304,7 +304,7 @@ colnames(radar_data) <- c(
 )
 
 radarchart(
-  radar_data,
+  radar_data1,
   axistype = 1,
   pcol = "blue",
   pfcol = rgb(0, 0, 1, 0.3),
@@ -314,6 +314,7 @@ radarchart(
   axislabcol = "black",
   vlcex = 0.9
 )
+
 
 ## Pub/bar (Assets2B)
 
@@ -339,13 +340,13 @@ bar_hastings_scores <- data.frame(
   Not_sure = 3.658537
 )
 
-radar_data <- rbind(
+radar_data2 <- rbind(
   c(100, 100, 100, 100),
   c(0, 0, 0, 0),
   bar_hastings_scores
 )
 
-colnames(radar_data) <- c(
+colnames(radar_data2) <- c(
   "15-20 mintues",
   "Further but still local",
   "None",
@@ -353,7 +354,7 @@ colnames(radar_data) <- c(
 )
 
 radarchart(
-  radar_data,
+  radar_data2,
   axistype = 1,
   pcol = "blue",
   pfcol = rgb(0, 0, 1, 0.3),
@@ -363,6 +364,7 @@ radarchart(
   axislabcol = "black",
   vlcex = 0.9
 )
+
 
 ## Park (Assets2C)
 
@@ -899,6 +901,7 @@ legend(
   lwd = 2,
   bty = "n"
 )
+
 
 
 ## Plymouth

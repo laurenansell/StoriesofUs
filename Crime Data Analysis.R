@@ -255,12 +255,12 @@ factpal1 <- colorFactor(topo.colors(10), crime_data_stopandsearch_plymouth$Objec
 leaflet(data = crime_data_street_plymouth) |> addTiles() |>
   addCircleMarkers(~Longitude, ~Latitude, popup = ~as.character(Crime.type),
                    color = ~factpal(Crime.type)) |> 
-  addLegend(pal = factpal, values = ~Crime.type, opacity = 1,position = "topleft")
+  addLegend(pal = factpal, values = ~Crime.type, opacity = 1,position = "bottomright")
 
 leaflet(data =crime_data_stopandsearch_plymouth) |> addTiles() |>
   addCircleMarkers(~Longitude, ~Latitude, popup = ~as.character(Object.of.search),
                    color=~factpal1(Object.of.search)) |> 
-  addLegend(pal = factpal1, values = ~Object.of.search, opacity = 1,position = "topleft")
+  addLegend(pal = factpal1, values = ~Object.of.search, opacity = 1,position = "bottomright")
 
 leaflet(crime_data_stopandsearch_plymouth) %>%
   addTiles() %>%  # Add default OpenStreetMap background
