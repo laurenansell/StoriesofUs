@@ -1,0 +1,334 @@
+---
+title: "Data Explainer Pack - Stonehouse"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(sf)
+library(mapview)
+library(sf)
+library(tmap)
+library(scales)
+library(likert)
+library(igraph)
+library(ggraph)
+
+## Census Data
+
+age_plymouth<-read.csv("../Data for Explainer Pack/plymouth_age.csv")
+age_sex_plymouth<-read.csv("../Data for Explainer Pack/plymouth_age_sex.csv")
+disability_plymouth<-read.csv("../Data for Explainer Pack/plymouth_disability.csv")
+disability_sex_plymouth<-read.csv("../Data for Explainer Pack/plymouth_disability_sex.csv")
+education_plymouth<-read.csv("../Data for Explainer Pack/plymouth_education.csv")
+education_sex_plymouth<-read.csv("../Data for Explainer Pack/plymouth_education_sex.csv")
+ethnicity_plymouth<-read.csv("../Data for Explainer Pack/plymouth_ethnicity.csv")
+ethnicity_sex_plymouth<-read.csv("../Data for Explainer Pack/plymouth_ethnicity_sex.csv")
+
+## CLS
+
+plymouth_CLS_reduced<-read.csv("../Data for Explainer Pack/plymouth_cls.csv")
+plymouth_CLS_unpaidhelp<-read.csv("../Data for Explainer Pack/plymouth_cls_unpaidhelp.csv")
+
+## Crime Data
+crime_data_street_plymouth<-read.csv("../Data for Explainer Pack/plymouth_street.csv")
+crime_data_stopandsearch_plymouth<-read.csv("../Data for Explainer Pack/plymouth_stopandsearch.csv")
+crime_data_outcomes_plymouth<-read.csv("../Data for Explainer Pack/plymouth_outcomes.csv")
+
+crime_data_street_plymouth$Month<-as.Date(paste(crime_data_street_plymouth$Month, "-01", sep=""))
+crime_data_stopandsearch_plymouth$Date<-as.POSIXct(crime_data_stopandsearch_plymouth$Date)
+
+## IMD Data
+
+plymouth_shape<-read_sf( "../Shapefiles/plymouth_LSOAs.shp")
+IMD_plymouth<-read.csv("../Data for Explainer Pack/plymouth_IMD.csv")
+
+plymouth_shape<-cbind(plymouth_shape,IMD_plymouth)
+```
+
+## Introduction
+
+This data explainer pack is designed to summarise and illustrate four key datasets commonly used to characterise the area and by key decision makers. It is anticipated that the summaries shown here will inform readers how information within the datasets can be visualised and illustrate how similar datasets can be represented.
+
+
+
+## Area Summary
+
+
+\newpage
+
+## 2021 Census Data
+
+The Office for National Statistics (ONS) conduct a population census every 10 years, providing a snapshot of the UK population, with the next census to be undertaken in 2031. 
+
+Data collected by the census includes:
+
+* Demographics
+* Health
+* Education
+*	Employment and work
+*	Housing
+* Travel and transport
+
+This data is used by local authorities, the NHS, schools and businesses to allocate funding and plan services. Data from previous censuses are also available to understand social and economic trends. 
+
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+
+age_sex_plymouth_total<-age_sex_plymouth |> group_by(Sex..2.categories.,Age..6.categories.) |> 
+  summarise(total=sum(Observation))
+
+ggplot(age_sex_plymouth_total)+
+  geom_linerange(aes(x = Age..6.categories., ymin = 0, ymax = total, colour = Sex..2.categories.), 
+                 position = position_dodge(width = 1))+
+  geom_point(aes(x = Age..6.categories., y = total, colour = Sex..2.categories.),
+             position = position_dodge(width = 1))+
+  coord_flip()+xlab("Age")+ylab("Total Count")+labs(color='Sex') 
+
+```
+
+
+```{r,message=FALSE,echo=FALSE,warning=FALSE}
+
+ethnicity_sex_plymouth_total<-ethnicity_sex_plymouth |> group_by(Sex..2.categories.,Ethnic.group..20.categories.) |> 
+  summarise(total=sum(Observation))
+
+ggplot(ethnicity_sex_plymouth_total)+
+  geom_linerange(aes(x = Ethnic.group..20.categories., ymin = 0, ymax = total, colour = Sex..2.categories.), 
+                 position = position_dodge(width = 1))+
+  geom_point(aes(x = Ethnic.group..20.categories., y = total, colour = Sex..2.categories.),
+             position = position_dodge(width = 1))+
+  xlab("Ethnicity")+ylab("Total Count")+labs(color='Sex')+
+  coord_flip()
+
+```
+
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+
+education_sex_plymouth_total<-education_sex_plymouth |> group_by(Sex..2.categories.,Highest.level.of.qualification..7.categories.) |> 
+  summarise(total=sum(Observation))
+
+ggplot(education_sex_plymouth_total)+
+  geom_linerange(aes(x = Highest.level.of.qualification..7.categories., ymin = 0, ymax = total, colour = Sex..2.categories.), 
+                 position = position_dodge(width = 1))+
+  geom_point(aes(x = Highest.level.of.qualification..7.categories., y = total, colour = Sex..2.categories.),
+             position = position_dodge(width = 1))+
+  coord_flip()+
+  xlab("Highest Qualification Level")+ylab("Total Count")+labs(color='Sex')
+
+```
+
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+
+disability_sex_plymouth_total<-disability_sex_plymouth |> group_by(Sex..2.categories.,Disability..3.categories.) |> 
+  summarise(total=sum(Observation))
+
+ggplot(disability_sex_plymouth_total)+
+  geom_linerange(aes(x = Disability..3.categories., ymin = 0, ymax = total, colour = Sex..2.categories.), 
+                 position = position_dodge(width = 1))+
+  geom_point(aes(x = Disability..3.categories., y = total, colour = Sex..2.categories.),
+             position = position_dodge(width = 1))+
+  xlab("Disabled under the Equality Act")+ylab("Total Count")+labs(color='Sex')
+
+```
+
+
+\newpage
+
+## Community Life Survey
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+
+plymouth_CLS_reduced |> group_by(LocAtt) |> count() |> 
+  ggplot(aes(x=LocAtt,y=n))+geom_bar(stat="identity",fill="lightgreen",colour = "darkgreen")+
+  ylab("Frequency")+xlab("Response")+labs(title = "When people get involved in their local area they can change the way the area is",
+       subtitle = "1 - Definitely agree, 5 - Definitely disagree")
+
+
+```
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+
+SBeNeigh_f<-plymouth_CLS_reduced$SBeNeigh |> as.factor() |> as.data.frame()
+
+
+names(SBeNeigh_f) <- "How strongly do you feel you belong to your immediate neighbourhood"
+
+
+lik <- likert(items=SBeNeigh_f[,1,drop=FALSE])
+
+plot(lik)
+
+
+```
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+
+plymouth_CLS_reduced |> group_by(SPull) |> count() |> 
+  ggplot(aes(x=SPull,y=n))+geom_bar(stat="identity",fill = "lightblue",color="blue")+
+  ylab("Frequency")+xlab("Response")+labs(title = "People in this neighbourhood pull together to improve the neighbourhood",
+       subtitle = "1 - Definitely agree, 4 - Definitely disagree")
+  
+
+```
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+## Network plot to see the relationships
+
+# Remove total and none column
+groups <- plymouth_CLS_unpaidhelp[,1:13]
+
+# Create co-occurrence matrix
+co_mat <- t(as.matrix(groups)) %*% as.matrix(groups)
+
+# Remove self-connections
+diag(co_mat) <- 0
+
+# Convert to edge list
+edges <- as.data.frame(as.table(co_mat)) |>
+  rename(from = Var1,
+         to = Var2,
+         weight = Freq) |>
+  filter(weight > 0)
+
+# Remove duplicate edges
+edges <- edges |>
+  rowwise() |>
+  mutate(pair = paste(sort(c(from, to)), collapse = "_")) |>
+  ungroup() |>
+  distinct(pair, .keep_all = TRUE) |>
+  select(-pair)
+
+# Node frequencies
+nodes <- data.frame(
+  name = colnames(groups),
+  freq = colSums(groups)
+)
+
+# Create graph
+g <- graph_from_data_frame(
+  d = edges,
+  vertices = nodes,
+  directed = FALSE
+)
+
+
+
+edges <- edges |>
+  filter(weight >= 3)
+
+labels <- c(
+  FUnPd1A = "Raising money",
+  FUnPd1B = "Committee member",
+  FUnPd1C = "Encouraging others",
+  FUnPd1D = "Helping to run",
+  FUnPd1E = "Visiting people",
+  FUnPd1F = "Mentoring",
+  FUnPd1G = "Giving advice",
+  FUnPd1H = "Admin",
+  FUnPd1I = "Transport",
+  FUnPd1J = "Representing",
+  FUnPd1K = "Campaigning",
+  FUnPd1L = "Other practical help",
+  FUnPd1M = "Other help"
+)
+
+nodes<-cbind(labels,nodes)
+
+nodes<-nodes |> select(labels,freq)
+
+# Plot
+ggraph(g, layout = "fr") +
+  geom_edge_link(aes(width = weight),
+                 alpha = 0.5,
+                 colour = "steelblue") +
+  geom_node_point(aes(size = freq),
+                  colour = "orange") +
+  geom_node_text(aes(label = labels),
+                 repel = TRUE) +
+  scale_edge_width(range = c(0.5, 5)) +
+  theme_void()
+
+```
+
+
+\newpage
+
+## Crime Data
+
+The police make datasets on street-level crime, outcomes and stop and searches from December 2013. The data includes information on:
+
+*	the force that provided the data about the crime,
+*	geolocation of the crime,
+* crime type,
+*	last outcome,
+*	reason for stop and search,
+*	demographic data.
+
+Crime data can be used to highlight issues within the local area, in particular around safety, and, as with the census data, aid in supporting funding applications.
+
+
+![plymouth stop and search heat map from July 2023 to June 2026](./Images/Stonehouse_StopandSearch_Heatmap.png)
+
+![Hastings stop and search map from July 2023 to June 2026 indicating the object of the search](./Images/Stonehouse_StopandSearch_map.png)
+
+![Hastings street heat map from July 2023 to June 2026](./Images/Stonehouse_Street_Heatmap.png)
+
+![Hastings street map from July 2023 to June 2026 indicating the crime type](./Images/Stonehouse_Street_map.png)
+
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+
+crime_data_street_plymouth |> group_by(Crime.type) |> count() |> 
+  ggplot(aes(x=Crime.type,y=n, fill=Crime.type))+geom_bar(stat = "identity")+
+  coord_flip()+theme(legend.position = "none")+xlab("Crime Type")+ylab("Frequency")
+
+```
+
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+
+crime_data_street_plymouth |> group_by(Month) |> count() |> 
+  ggplot(aes(x=Month,y=n))+geom_line(linewidth = 1)+xlab("Date")+ylab("Frequency")+
+  scale_x_date(breaks = pretty_breaks(10))
+
+```
+
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+
+crime_data_stopandsearch_plymouth |> group_by(Object.of.search) |> count() |> 
+  ggplot(aes(x=Object.of.search,y=n,fill=Object.of.search))+geom_bar(stat = "identity")+
+  coord_flip()+theme(legend.position = "none")+xlab("Object of Search")+ylab("Frequency")
+
+```
+
+
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+
+crime_data_stopandsearch_plymouth$Self.defined.ethnicity<- factor(crime_data_stopandsearch_plymouth$Self.defined.ethnicity)
+
+crime_data_stopandsearch_plymouth |> group_by(Self.defined.ethnicity) |> count() |> 
+  ggplot(aes(x=Self.defined.ethnicity,y=n,fill=Self.defined.ethnicity))+geom_bar(stat = "identity")+
+  coord_flip()+theme(legend.position = "none")+xlab("Self Defined Ethnicity")+ylab("Frequency")
+
+```
+
+
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+
+crime_data_stopandsearch_plymouth |> group_by(Date) |> count() |> 
+  ggplot(aes(x=Date,y=n))+geom_line(linewidth = 1)+
+  scale_x_date(breaks = pretty_breaks(10))+xlab("Date")+ylab("Frequency")
+
+```
+
+\newpage
+
+## IMD Data
+
+
+![IMD Health, deprivation and disability rank for Castle Ward, Hastings ](./Images/Stonehouse_HealthIMD_Rank.png)
+
+![IMD Health, deprivation and disability decile for Castle Ward, Hastings ](./Images/Stonehouse_HealthIMD_Decile.png)
