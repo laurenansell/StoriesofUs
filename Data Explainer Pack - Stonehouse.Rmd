@@ -272,13 +272,13 @@ The police make datasets on street-level crime, outcomes and stop and searches f
 Crime data can be used to highlight issues within the local area, in particular around safety, and, as with the census data, aid in supporting funding applications.
 
 
-![plymouth stop and search heat map from July 2023 to June 2026](./Images/Stonehouse_StopandSearch_Heatmap.png)
+![Stonehouse stop and search heat map from July 2023 to June 2026](./Images/Stonehouse_StopandSearch_Heatmap.png)
 
-![Hastings stop and search map from July 2023 to June 2026 indicating the object of the search](./Images/Stonehouse_StopandSearch_map.png)
+![Stonehouse stop and search map from July 2023 to June 2026 indicating the object of the search](./Images/Stonehouse_StopandSearch_map.png)
 
-![Hastings street heat map from July 2023 to June 2026](./Images/Stonehouse_Street_Heatmap.png)
+![Stonehouse street heat map from July 2023 to June 2026](./Images/Stonehouse_Street_Heatmap.png)
 
-![Hastings street map from July 2023 to June 2026 indicating the crime type](./Images/Stonehouse_Street_map.png)
+![Stonehouse street map from July 2023 to June 2026 indicating the crime type](./Images/Stonehouse_Street_map.png)
 
 ```{r, echo=FALSE,warning=FALSE,message=FALSE}
 
@@ -329,6 +329,6 @@ crime_data_stopandsearch_plymouth |> group_by(Date) |> count() |>
 ## IMD Data
 
 
-![IMD Health, deprivation and disability rank for Castle Ward, Hastings ](./Images/Stonehouse_HealthIMD_Rank.png)
+![IMD Health, deprivation and disability rank for each of the five LSOAs that form Stonehouse ](./Images/Stonehouse_HealthIMD_Rank.png)
 
-![IMD Health, deprivation and disability decile for Castle Ward, Hastings ](./Images/Stonehouse_HealthIMD_Decile.png)
+![IMD Health, deprivation and disability decile for each of the five LSOAs that form Stonehouse ](./Images/Stonehouse_HealthIMD_Decile.png)
