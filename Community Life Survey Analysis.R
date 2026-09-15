@@ -15,6 +15,7 @@
 ##              24/08/2026
 ##              25/08/2026
 ##              03/09/2026
+##              15/09/2026
 
 ## Load in the required libraries
 library(tidyverse)
@@ -389,13 +390,13 @@ park_hastings_scores <- data.frame(
   Not_sure = 2.479339
 )
 
-radar_data <- rbind(
+radar_data3 <- rbind(
   c(100, 100, 100, 100),
   c(0, 0, 0, 0),
   park_hastings_scores
 )
 
-colnames(radar_data) <- c(
+colnames(radar_data3) <- c(
   "15-20 mintues",
   "Further but still local",
   "None",
@@ -403,7 +404,7 @@ colnames(radar_data) <- c(
 )
 
 radarchart(
-  radar_data,
+  radar_data3,
   axistype = 1,
   pcol = "blue",
   pfcol = rgb(0, 0, 1, 0.3),
@@ -437,13 +438,13 @@ library_hastings_scores <- data.frame(
   Not_sure = 7.675906
 )
 
-radar_data <- rbind(
+radar_data4 <- rbind(
   c(100, 100, 100, 100),
   c(0, 0, 0, 0),
   library_hastings_scores
 )
 
-colnames(radar_data) <- c(
+colnames(radar_data4) <- c(
   "15-20 mintues",
   "Further but still local",
   "None",
@@ -451,7 +452,7 @@ colnames(radar_data) <- c(
 )
 
 radarchart(
-  radar_data,
+  radar_data4,
   axistype = 1,
   pcol = "blue",
   pfcol = rgb(0, 0, 1, 0.3),
@@ -487,13 +488,13 @@ cafe_hastings_scores <- data.frame(
   Not_sure = 0.6036217
 )
 
-radar_data <- rbind(
+radar_data5 <- rbind(
   c(100, 100, 100, 100),
   c(0, 0, 0, 0),
   cafe_hastings_scores
 )
 
-colnames(radar_data) <- c(
+colnames(radar_data5) <- c(
   "15-20 mintues",
   "Further but still local",
   "None",
@@ -501,7 +502,7 @@ colnames(radar_data) <- c(
 )
 
 radarchart(
-  radar_data,
+  radar_data5,
   axistype = 1,
   pcol = "blue",
   pfcol = rgb(0, 0, 1, 0.3),
@@ -536,13 +537,13 @@ communityhall_hastings_scores <- data.frame(
   Not_sure = 14.285714
 )
 
-radar_data <- rbind(
+radar_data6 <- rbind(
   c(100, 100, 100, 100),
   c(0, 0, 0, 0),
   communityhall_hastings_scores
 )
 
-colnames(radar_data) <- c(
+colnames(radar_data6) <- c(
   "15-20 mintues",
   "Further but still local",
   "None",
@@ -550,7 +551,7 @@ colnames(radar_data) <- c(
 )
 
 radarchart(
-  radar_data,
+  radar_data6,
   axistype = 1,
   pcol = "blue",
   pfcol = rgb(0, 0, 1, 0.3),
@@ -586,13 +587,13 @@ sportsfacilities_hastings_scores <- data.frame(
   Not_sure = 6.87500
 )
 
-radar_data <- rbind(
+radar_data7 <- rbind(
   c(100, 100, 100, 100),
   c(0, 0, 0, 0),
   sportsfacilities_hastings_scores
 )
 
-colnames(radar_data) <- c(
+colnames(radar_data7) <- c(
   "15-20 mintues",
   "Further but still local",
   "None",
@@ -600,7 +601,7 @@ colnames(radar_data) <- c(
 )
 
 radarchart(
-  radar_data,
+  radar_data7,
   axistype = 1,
   pcol = "blue",
   pfcol = rgb(0, 0, 1, 0.3),
@@ -634,13 +635,13 @@ gp_hastings_scores <- data.frame(
   Not_sure = 2.434077
 )
 
-radar_data <- rbind(
+radar_data8 <- rbind(
   c(100, 100, 100, 100),
   c(0, 0, 0, 0),
   gp_hastings_scores
 )
 
-colnames(radar_data) <- c(
+colnames(radar_data8) <- c(
   "15-20 mintues",
   "Further but still local",
   "None",
@@ -648,7 +649,7 @@ colnames(radar_data) <- c(
 )
 
 radarchart(
-  radar_data,
+  radar_data8,
   axistype = 1,
   pcol = "blue",
   pfcol = rgb(0, 0, 1, 0.3),
@@ -682,13 +683,13 @@ chemist_hastings_scores <- data.frame(
   Not_sure = 0.804829
 )
 
-radar_data <- rbind(
+radar_data9 <- rbind(
   c(100, 100, 100, 100),
   c(0, 0, 0, 0),
   chemist_hastings_scores
 )
 
-colnames(radar_data) <- c(
+colnames(radar_data9) <- c(
   "15-20 mintues",
   "Further but still local",
   "None",
@@ -696,7 +697,7 @@ colnames(radar_data) <- c(
 )
 
 radarchart(
-  radar_data,
+  radar_data9,
   axistype = 1,
   pcol = "blue",
   pfcol = rgb(0, 0, 1, 0.3),
@@ -730,13 +731,13 @@ postoffice_hastings_scores <- data.frame(
   Not_sure = 1.652893
 )
 
-radar_data <- rbind(
+radar_data10 <- rbind(
   c(100, 100, 100, 100),
   c(0, 0, 0, 0),
   postoffice_hastings_scores
 )
 
-colnames(radar_data) <- c(
+colnames(radar_data10) <- c(
   "15-20 mintues",
   "Further but still local",
   "None",
@@ -744,7 +745,7 @@ colnames(radar_data) <- c(
 )
 
 radarchart(
-  radar_data,
+  radar_data10,
   axistype = 1,
   pcol = "blue",
   pfcol = rgb(0, 0, 1, 0.3),
@@ -778,13 +779,13 @@ worship_hastings_scores <- data.frame(
   Not_sure = 6.179775
 )
 
-radar_data <- rbind(
+radar_data11 <- rbind(
   c(100, 100, 100, 100),
   c(0, 0, 0, 0),
   worship_hastings_scores
 )
 
-colnames(radar_data) <- c(
+colnames(radar_data11) <- c(
   "15-20 mintues",
   "Further but still local",
   "None",
@@ -792,7 +793,7 @@ colnames(radar_data) <- c(
 )
 
 radarchart(
-  radar_data,
+  radar_data11,
   axistype = 1,
   pcol = "blue",
   pfcol = rgb(0, 0, 1, 0.3),
@@ -826,13 +827,13 @@ publictransport_hastings_scores <- data.frame(
   Not_sure = 1.1834320
 )
 
-radar_data <- rbind(
+radar_data12 <- rbind(
   c(100, 100, 100, 100),
   c(0, 0, 0, 0),
   publictransport_hastings_scores
 )
 
-colnames(radar_data) <- c(
+colnames(radar_data12) <- c(
   "15-20 mintues",
   "Further but still local",
   "None",
@@ -840,7 +841,7 @@ colnames(radar_data) <- c(
 )
 
 radarchart(
-  radar_data,
+  radar_data12,
   axistype = 1,
   pcol = "blue",
   pfcol = rgb(0, 0, 1, 0.3),
@@ -853,17 +854,22 @@ radarchart(
 
 ## Combined radar plots
 
+## Which are the most insteresting to compare:
+## General shops
+## Library
+## Parks
+
 asset_data <- data.frame(
-  Minutes = c(87.3983740,86.1932939,71.348315),
-  Still_local = c(9.7560976,11.8343195,19.101124),
-  None = c(0.8130081,0.7889546,3.370787),
-  Not_sure = c(2.0325203,1.1834320,6.179775)
+  Minutes = c(87.3983740,39.658849, 70.247934),
+  Still_local = c(9.7560976,37.739872,22.727273),
+  None = c(0.8130081,14.925373,4.545455),
+  Not_sure = c(2.0325203, 7.675906,4.545455)
 )
 
 rownames(asset_data) <- c(
   "General shop",
-  "Public transport",
-  "Place of worship"
+  "Library",
+  "Park"
 )
 
 
@@ -1123,6 +1129,41 @@ generalshop_Plymouth$Plymouth_generalshop_total<-as.numeric(generalshop_Plymouth
 ggplot(generalshop_Plymouth,aes(x=distance,y=Plymouth_generalshop_total))+geom_bar(stat="identity")+
   coord_flip()
 
+generalshop_Plymouth<-generalshop_Plymouth |> 
+  mutate(Percentage = (Plymouth_generalshop_total/sum(Plymouth_generalshop_total))*100)
+
+
+generalshop_plymouth_scores <- data.frame(
+  Minutes = 87.804878,
+  Still_local = 9.038737,
+  None = 1.434720,
+  Not_sure = 1.721664
+)
+
+radar_data1 <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  generalshop_plymouth_scores
+)
+
+colnames(radar_data1) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data1,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
 
 ## Pub/bar (Assets2B)
 
@@ -1137,6 +1178,43 @@ bar_Plymouth$Plymouth_bar_total<-as.numeric(bar_Plymouth$Plymouth_bar_total)
 ggplot(bar_Plymouth,aes(x=distance,y=Plymouth_bar_total))+geom_bar(stat="identity")+
   coord_flip()
 
+bar_Plymouth<-bar_Plymouth |> 
+  mutate(Percentage = (Plymouth_bar_total/sum(Plymouth_bar_total))*100)
+
+
+bar_plymouth_scores <- data.frame(
+  Minutes = 79.106628,
+  Still_local = 12.968300,
+  None = 4.178674,
+  Not_sure = 3.746398
+)
+
+radar_data2 <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  bar_plymouth_scores
+)
+
+colnames(radar_data2) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data2,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
+
+
 ## Park (Assets2C)
 
 Plymouth_park<-Plymouth_CLS_assets |> select(Assets2C_a,Assets2C_b,Assets2C_c,Assets2C_d)
@@ -1149,6 +1227,43 @@ park_Plymouth$Plymouth_park_total<-as.numeric(park_Plymouth$Plymouth_park_total)
 
 ggplot(park_Plymouth,aes(x=distance,y=Plymouth_park_total))+geom_bar(stat="identity")+
   coord_flip()
+
+park_Plymouth<-park_Plymouth |> 
+  mutate(Percentage = (Plymouth_park_total/sum(Plymouth_park_total))*100)
+
+
+park_plymouth_scores <- data.frame(
+  Minutes = 83.641536,
+  Still_local = 12.091038,
+  None = 1.991465,
+  Not_sure = 2.275960
+)
+
+radar_data3 <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  park_plymouth_scores
+)
+
+colnames(radar_data3) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data3,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
+
 
 ## Library (Assets2D)
 
@@ -1163,6 +1278,43 @@ library_Plymouth$Plymouth_library_total<-as.numeric(library_Plymouth$Plymouth_li
 ggplot(library_Plymouth,aes(x=distance,y=Plymouth_library_total))+geom_bar(stat="identity")+
   coord_flip()
 
+library_Plymouth<-library_Plymouth |> 
+  mutate(Percentage = (Plymouth_library_total/sum(Plymouth_library_total))*100)
+
+library_plymouth_scores <- data.frame(
+  Minutes =  48.961424,
+  Still_local = 28.783383,
+  None = 14.540059,
+  Not_sure = 7.715134
+)
+
+radar_data4 <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  library_plymouth_scores
+)
+
+colnames(radar_data4) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data4,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
+
+
+
 ## Restaurant/cafe (Assets2E)
 
 Plymouth_cafe<-Plymouth_CLS_assets |> select(Assets2E_a,Assets2E_b,Assets2E_c,Assets2E_d)
@@ -1175,6 +1327,42 @@ cafe_Plymouth$Plymouth_cafe_total<-as.numeric(cafe_Plymouth$Plymouth_cafe_total)
 
 ggplot(cafe_Plymouth,aes(x=distance,y=Plymouth_cafe_total))+geom_bar(stat="identity")+
   coord_flip()
+
+cafe_Plymouth<-cafe_Plymouth |> 
+  mutate(Percentage = (Plymouth_cafe_total/sum(Plymouth_cafe_total))*100)
+
+cafe_plymouth_scores <- data.frame(
+  Minutes = 63.936782,
+  Still_local = 21.551724,
+  None = 10.919540,
+  Not_sure = 3.591954
+)
+
+radar_data5 <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  cafe_plymouth_scores
+)
+
+colnames(radar_data5) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data5,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
+
 
 ## Community centre/hall (Assets2F)
 
@@ -1189,6 +1377,42 @@ communityhall_Plymouth$Plymouth_communityhall_total<-as.numeric(communityhall_Pl
 ggplot(communityhall_Plymouth,aes(x=distance,y=Plymouth_communityhall_total))+geom_bar(stat="identity")+
   coord_flip()
 
+communityhall_Plymouth<-communityhall_Plymouth |> 
+  mutate(Percentage = (Plymouth_communityhall_total/sum(Plymouth_communityhall_total))*100)
+
+communityhall_plymouth_scores <- data.frame(
+  Minutes = 58.918129,
+  Still_local = 16.081871,
+  None = 9.210526,
+  Not_sure = 15.789474
+)
+
+radar_data6 <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  communityhall_plymouth_scores
+)
+
+colnames(radar_data6) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data6,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
+
+
 ## Sports facilities (Assets2G)
 
 Plymouth_sportsfacilities<-Plymouth_CLS_assets |> select(Assets2G_a,Assets2G_b,Assets2G_c,Assets2G_d)
@@ -1201,6 +1425,41 @@ sportsfacilities_Plymouth$Plymouth_sportsfacilities_total<-as.numeric(sportsfaci
 
 ggplot(sportsfacilities_Plymouth,aes(x=distance,y=Plymouth_sportsfacilities_total))+geom_bar(stat="identity")+
   coord_flip()
+sportsfacilities_Plymouth<-sportsfacilities_Plymouth |> 
+  mutate(Percentage = (Plymouth_sportsfacilities_total/sum(Plymouth_sportsfacilities_total))*100)
+
+sportsfacilities_plymouth_scores <- data.frame(
+  Minutes = 48.057554,
+  Still_local = 30.215827,
+  None = 14.820144,
+  Not_sure = 6.906475
+)
+
+radar_data7 <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  sportsfacilities_plymouth_scores
+)
+
+colnames(radar_data7) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data7,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
+
 
 ## Health centre/GP (Assets2H)
 
@@ -1215,6 +1474,41 @@ gp_Plymouth$Plymouth_gp_total<-as.numeric(gp_Plymouth$Plymouth_gp_total)
 ggplot(gp_Plymouth,aes(x=distance,y=Plymouth_gp_total))+geom_bar(stat="identity")+
   coord_flip()
 
+gp_Plymouth<-gp_Plymouth |> 
+  mutate(Percentage = (Plymouth_gp_total/sum(Plymouth_gp_total))*100)
+
+gp_plymouth_scores <- data.frame(
+  Minutes = 71.875000,
+  Still_local = 20.454545,
+  None = 4.403409,
+  Not_sure = 3.267045
+)
+
+radar_data8 <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  gp_plymouth_scores
+)
+
+colnames(radar_data8) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data8,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
+
 ## Chemist or pharmacy (Assets2I)
 
 Plymouth_chemist<-Plymouth_CLS_assets |> select(Assets2I_a,Assets2I_b,Assets2I_c,Assets2I_d)
@@ -1227,6 +1521,41 @@ chemist_Plymouth$Plymouth_chemist_total<-as.numeric(chemist_Plymouth$Plymouth_ch
 
 ggplot(chemist_Plymouth,aes(x=distance,y=Plymouth_chemist_total))+geom_bar(stat="identity")+
   coord_flip()
+
+chemist_Plymouth<-chemist_Plymouth |> 
+  mutate(Percentage = (Plymouth_chemist_total/sum(Plymouth_chemist_total))*100)
+
+chemist_plymouth_scores <- data.frame(
+  Minutes = 73.714286,
+  Still_local = 18.714286,
+  None =  4.428571,
+  Not_sure = 3.142857
+)
+
+radar_data9 <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  chemist_plymouth_scores
+)
+
+colnames(radar_data9) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data9,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
 
 ## Post Office (Assets2J)
 
@@ -1241,6 +1570,42 @@ postoffice_Plymouth$Plymouth_postoffice_total<-as.numeric(postoffice_Plymouth$Pl
 ggplot(postoffice_Plymouth,aes(x=distance,y=Plymouth_postoffice_total))+geom_bar(stat="identity")+
   coord_flip()
 
+postoffice_Plymouth<-postoffice_Plymouth |> 
+  mutate(Percentage = (Plymouth_postoffice_total/sum(Plymouth_postoffice_total))*100)
+
+postoffice_plymouth_scores <- data.frame(
+  Minutes = 67.194245,
+  Still_local = 21.294964,
+  None = 8.345324,
+  Not_sure = 3.165468
+)
+
+radar_data10 <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  postoffice_plymouth_scores
+)
+
+colnames(radar_data10) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data10,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
+
+
 ## Place of worship for my faith or religion, such as a church, mosque, temple (Assets2K)
 
 Plymouth_worship<-Plymouth_CLS_assets |> select(Assets2K_a,Assets2K_b,Assets2K_c,Assets2K_d)
@@ -1253,6 +1618,42 @@ worship_Plymouth$Plymouth_worship_total<-as.numeric(worship_Plymouth$Plymouth_wo
 
 ggplot(worship_Plymouth,aes(x=distance,y=Plymouth_worship_total))+geom_bar(stat="identity")+
   coord_flip()
+
+worship_Plymouth<-worship_Plymouth |> 
+  mutate(Percentage = (Plymouth_worship_total/sum(Plymouth_worship_total))*100)
+
+worship_plymouth_scores <- data.frame(
+  Minutes = 71.564885,
+  Still_local = 16.030534,
+  None = 5.725191,
+  Not_sure = 6.679389
+)
+
+radar_data11 <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  worship_plymouth_scores
+)
+
+colnames(radar_data11) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data11,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
+
 
 ## Public transport links (Assets2L)	
 
@@ -1267,3 +1668,37 @@ publictransport_Plymouth$Plymouth_publictransport_total<-as.numeric(publictransp
 ggplot(publictransport_Plymouth,aes(x=distance,y=Plymouth_publictransport_total))+geom_bar(stat="identity")+
   coord_flip()
 
+publictransport_Plymouth<-publictransport_Plymouth |> 
+  mutate(Percentage = (Plymouth_publictransport_total/sum(Plymouth_publictransport_total))*100)
+
+publictransport_plymouth_scores <- data.frame(
+  Minutes = 87.2881356,
+  Still_local = 10.1694915,
+  None = 0.5649718,
+  Not_sure = 1.9774011
+)
+
+radar_data12 <- rbind(
+  c(100, 100, 100, 100),
+  c(0, 0, 0, 0),
+  publictransport_plymouth_scores
+)
+
+colnames(radar_data12) <- c(
+  "15-20 mintues",
+  "Further but still local",
+  "None",
+  "Not sure/Don't know"
+)
+
+radarchart(
+  radar_data12,
+  axistype = 1,
+  pcol = "blue",
+  pfcol = rgb(0, 0, 1, 0.3),
+  plwd = 2,
+  cglcol = "grey",
+  cglty = 1,
+  axislabcol = "black",
+  vlcex = 0.9
+)
